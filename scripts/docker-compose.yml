@@ -1,0 +1,31 @@
+version: "3"
+
+services:
+  hasher:
+    build: hasher
+    ports:
+    - "83:80"
+
+  rng:
+    build: rng
+    ports:
+    - "82:80"
+
+  worker:
+    build: worker
+    ports:
+    - "81:80"
+    depends_on:
+    - "redis"
+    - "hasher"
+    - "rng"
+
+  webui:
+    build: webui
+    ports:
+    - "80:80"
+    depends_on:
+      - "redis"
+
+  redis:
+    image: redis
