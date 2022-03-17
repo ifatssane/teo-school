@@ -10,13 +10,6 @@ resource "azurerm_role_assignment" "role_acrpull" {
   role_definition_name             = "AcrPull"
   principal_id                     = azurerm_kubernetes_cluster.aks.kubelet_identity.0.object_id
   skip_service_principal_aad_check = true
-       permissions {
-         actions = [
-             "Microsoft.Authorization/roleAssignments/write",
-             "Microsoft.Authorization/roleAssignments/delete",
-         ]
-         not_actions = []
-     }
 }
 
 resource "azurerm_container_registry" "acr" {
