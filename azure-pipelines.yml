@@ -40,7 +40,7 @@ stages:
         Dockerfile: webui/Dockerfile
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: drop'
-  ...
+
 - stage: CD
   displayName: 'Continuous Delivery'
   dependsOn: CI
