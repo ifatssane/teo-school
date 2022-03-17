@@ -18,24 +18,32 @@ stages:
       displayName: Build RNG
       condition: succeededOrFailed()
       inputs:
+        containerRegistry: 'imagesStorageForCIbuilds'
+        repository: jaouadifatssane/RNG
         command: build
         Dockerfile: rng/Dockerfile
     - task: Docker@2
-      displayName: Build Hasher
+      displayName: Build Hacher
       condition: succeededOrFailed()
       inputs:
+        containerRegistry: 'imagesStorageForCIbuilds'
+        repository: jaouadifatssane/hacher
         command: build
         Dockerfile: hasher/Dockerfile
     - task: Docker@2
       displayName: Build Worker
       condition: succeededOrFailed()
       inputs:
+        containerRegistry: 'imagesStorageForCIbuilds'
+        repository: jaouadifatssane/worker
         command: build
         Dockerfile: worker/Dockerfile
     - task: Docker@2
       displayName: Build Webui
       condition: succeededOrFailed()
       inputs:
+        containerRegistry: 'imagesStorageForCIbuilds'
+        repository: jaouadifatssane/webui
         command: build
         Dockerfile: webui/Dockerfile
     - task: PublishBuildArtifacts@1
