@@ -1,0 +1,51 @@
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/main
+stages:
+- stage: CI
+  displayName: 'Continuous Integration'
+  jobs:
+  - job: Job_1
+    displayName: Build
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - checkout: self
+      clean: true
+    - task: Docker@2
+      displayName: Build RNG
+      condition: succeededOrFailed()
+      inputs:
+        command: build
+        Dockerfile: rng/Dockerfile
+    - task: Docker@2
+      displayName: Build Hasher
+      condition: succeededOrFailed()
+      inputs:
+        command: build
+        Dockerfile: hasher/Dockerfile
+    - task: Docker@2
+      displayName: Build Worker
+      condition: succeededOrFailed()
+      inputs:
+        command: build
+        Dockerfile: worker/Dockerfile
+    - task: Docker@2
+      displayName: Build Webui
+      condition: succeededOrFailed()
+      inputs:
+        command: build
+        Dockerfile: webui/Dockerfile
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: drop'
+- stage: CD
+  displayName: 'Continuous Delivery'
+  dependsOn: CI
+  jobs:
+  - job: Job_1
+    displayName: CD
+    pool:
+      vmImage: ubuntu-latest
+    steps:
