@@ -39,7 +39,10 @@ stages:
         command: build
         Dockerfile: webui/Dockerfile
     - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: drop'
+      inputs:
+          pathToPublish: '$(Build.ArtifactStagingDirectory)'
+          artifactName: 'Publish Artifact: drop'
+
 
 - stage: CD
   displayName: 'Continuous Delivery'
@@ -51,4 +54,6 @@ stages:
       vmImage: ubuntu-latest
     steps:
     - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact: drop'
+      inputs:
+          pathToPublish: '$(Build.ArtifactStagingDirectory)'
+          artifactName: 'Publish Artifact: drop'
