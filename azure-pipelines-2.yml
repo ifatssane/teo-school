@@ -13,7 +13,7 @@ steps:
 - task: Terraform@2
   inputs:
     TemplatePath: 'scripts/infrastructure'
-    Arguments: 'destroy -auto-appriove'
+    Arguments: 'destroy -auto-approve'
     InstallTerraform: true
     UseAzureSub: true
     ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
