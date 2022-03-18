@@ -20,7 +20,7 @@ stages:
       inputs:
         containerRegistry: 'imagesStorageForCIbuilds'
         repository: jaouadifatssane/RNG
-        command: build
+        command: buildAndPush
         Dockerfile: rng/Dockerfile
     - task: Docker@2
       displayName: Build Hacher
@@ -28,7 +28,7 @@ stages:
       inputs:
         containerRegistry: 'imagesStorageForCIbuilds'
         repository: jaouadifatssane/hacher
-        command: build
+        command: buildAndPush
         Dockerfile: hasher/Dockerfile
     - task: Docker@2
       displayName: Build Worker
@@ -36,7 +36,7 @@ stages:
       inputs:
         containerRegistry: 'imagesStorageForCIbuilds'
         repository: jaouadifatssane/worker
-        command: build
+        command: buildAndPush
         Dockerfile: worker/Dockerfile
     - task: Docker@2
       displayName: Build Webui
@@ -44,7 +44,7 @@ stages:
       inputs:
         containerRegistry: 'imagesStorageForCIbuilds'
         repository: jaouadifatssane/webui
-        command: build
+        command: buildAndPush
         Dockerfile: webui/Dockerfile
     - task: PublishBuildArtifacts@1
       inputs:
