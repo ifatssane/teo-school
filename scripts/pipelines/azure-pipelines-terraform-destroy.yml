@@ -13,9 +13,21 @@ steps:
 - task: Terraform@2
   inputs:
     TemplatePath: 'scripts/infrastructure'
+    Arguments: 'init'
+    InstallTerraform: true
+    UseAzureSub: true
+    ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
+    ConnectedServiceNameARM: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+    ManageState: false
+
+- task: Terraform@2
+  inputs:
+    TemplatePath: 'scripts/infrastructure'
     Arguments: 'destroy -auto-approve'
     InstallTerraform: true
     UseAzureSub: true
     ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
     ConnectedServiceNameARM: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
     ManageState: false
+
+    
