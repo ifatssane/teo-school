@@ -1,8 +1,8 @@
-resources:
-  repositories:
-  - repository: self
-    type: git
-    ref: refs/heads/main
+trigger:
+  paths:
+    exclude:
+    - scripts/infrastructure
+    - scripts/pipelines
 stages:
 - stage: CI
   displayName: 'Continuous Integration'
