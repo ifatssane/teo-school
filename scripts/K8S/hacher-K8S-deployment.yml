@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hacher-deployment
+  labels:
+    app: hacher
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hacher
+  template:
+    metadata:
+      labels:
+        app: hacher
+    spec:
+      containers:
+      - name: hacher
+        image: hacher
+        ports:
+        - containerPort: 80

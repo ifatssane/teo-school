@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rng-deployment
+  labels:
+    app: RNG
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: RNG
+  template:
+    metadata:
+      labels:
+        app: RNG
+    spec:
+      containers:
+      - name: rng
+        image: RNG
+        ports:
+        - containerPort: 80
