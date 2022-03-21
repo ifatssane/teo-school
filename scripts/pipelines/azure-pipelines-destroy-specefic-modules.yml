@@ -18,7 +18,7 @@ steps:
 - task: Terraform@2
   inputs:
     TemplatePath: 'scripts/infrastructure'
-    Arguments: 'destroy -auto-approve -target azurerm_container_registry.jaouadacr -target azurerm_kubernetes_cluster.dockercoins-cluster'
+    Arguments: 'destroy -target azurerm_container_registry.dockercoins-acr target azurerm_kubernetes_cluster.dockercoins-cluster -auto-approve'
     InstallTerraform: true
     UseAzureSub: true
     ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
