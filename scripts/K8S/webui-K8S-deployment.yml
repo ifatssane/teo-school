@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: webui
-        image: webui
+        image: dockercoinsacr.azurecr.io/jaouadifatssane/webui:latest
         ports:
         - containerPort: 80

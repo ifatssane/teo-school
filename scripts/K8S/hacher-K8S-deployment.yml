@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: hacher
-        image: hacher
+        image: dockercoinsacr.azurecr.io/jaouadifatssane/hacher:latest
         ports:
         - containerPort: 80

@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
       - name: rng
-        image: RNG
+        image: dockercoinsacr.azurecr.io/jaouadifatssane/RNG:latest
         ports:
         - containerPort: 80
