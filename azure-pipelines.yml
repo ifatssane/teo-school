@@ -63,4 +63,29 @@ stages:
       runOnce:
         deploy:
           steps:
-            - script: echo "hello, dev world !!!"
+            - task: replacetokens@5
+              inputs:
+                targetFiles: '**/*.yml'
+                encoding: 'auto'
+                tokenPattern: 'default'
+                writeBOM: true
+                actionOnMissing: 'warn'
+                keepToken: false
+                actionOnNoFiles: 'warn'
+                enableTransforms: false
+                enableRecursion: false
+                useLegacyPattern: false
+                enableTelemetry: true
+
+            - task: KubernetesManifest@0
+              inputs:
+                action: 'createSecret'
+                kubernetesServiceConnection: 'aks-connection-service'
+                secretType: 'dockerRegistry'
+                dockerRegistryEndpoint: 'dockercoinsacr'
+
+            - task: KubernetesManifest@0
+              inputs:
+                action: 'deploy'
+                kubernetesServiceConnection: 'aks-connection-service'
+                manifests: '/scripts/K8S/*-deployment.yml'
