@@ -7,15 +7,18 @@ pool:
 steps:
 
 - task: TerraformInstaller@0
+  displayName: 'Install Terraform'
   inputs:
     terraformVersion: 'latest'
 - task: TerraformTaskV1@0
+  displayName: 'initialize Terraform'
   inputs:
     provider: 'azurerm'
     command: 'init'
     backendServiceArm: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
 
 - task: TerraformTaskV1@0
+  displayName: 'Apply Terraform'
   inputs:
     provider: 'azurerm'
     command: 'apply'
