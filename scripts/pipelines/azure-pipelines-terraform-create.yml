@@ -16,6 +16,7 @@ steps:
     provider: 'azurerm'
     command: 'init'
     backendServiceArm: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+    backendAzureRmStorageAccountName: 'jaouadterraformstorage'
 
 - task: TerraformTaskV1@0
   displayName: 'Apply Terraform'
