@@ -22,6 +22,7 @@ stages:
         repository: jaouadifatssane/RNG
         command: buildAndPush
         Dockerfile: rng/Dockerfile
+        tags: $(Build.Buildid)
     - task: Docker@2
       displayName: Build Hacher
       condition: succeededOrFailed()
@@ -30,6 +31,7 @@ stages:
         repository: jaouadifatssane/hacher
         command: buildAndPush
         Dockerfile: hasher/Dockerfile
+        tags: $(Build.Buildid)
     - task: Docker@2
       displayName: Build Worker
       condition: succeededOrFailed()
@@ -38,6 +40,7 @@ stages:
         repository: jaouadifatssane/worker
         command: buildAndPush
         Dockerfile: worker/Dockerfile
+        tags: $(Build.Buildid)
     - task: Docker@2
       displayName: Build Webui
       condition: succeededOrFailed()
@@ -46,6 +49,7 @@ stages:
         repository: jaouadifatssane/webui
         command: buildAndPush
         Dockerfile: webui/Dockerfile
+        tags: $(Build.Buildid)
 
 - stage: DeployDev
   displayName: 'Deploy to Dev env'

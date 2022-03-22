@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: worker
-        image: worker
+        image: dockercoinsacr.azurecr.io/jaouadifatssane/worker:#{tags}
         imagePullPolicy: Always
         ports:
         - containerPort: 80

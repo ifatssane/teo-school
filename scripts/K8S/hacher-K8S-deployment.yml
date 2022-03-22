@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: hacher
-        image: dockercoinsacr.azurecr.io/jaouadifatssane/hacher
+        image: dockercoinsacr.azurecr.io/jaouadifatssane/hacher:#{tags}
         imagePullPolicy: Always
         ports:
         - containerPort: 80
