@@ -14,7 +14,7 @@ steps:
   displayName: 'initialize Terraform'
   inputs:
     provider: 'azurerm'
-    command: 'Init'
+    command: 'init'
     backendServiceArm: 'Azure-teolia-service-connection'
     backendAzureRmResourceGroupName: 'jaouad-aks-dockercoins'
     backendAzureRmStorageAccountName: 'jaouadterraformstorage'
