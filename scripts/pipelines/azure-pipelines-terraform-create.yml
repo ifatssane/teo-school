@@ -26,6 +26,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'plan'
+    environmentServiceNameAzureRM: 'Azure-teolia-service-connection'    
     workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure'
 
 - task: TerraformTaskV2@2
@@ -34,4 +35,5 @@ steps:
     provider: 'azurerm'
     command: 'apply'
     commandOptions: '-auto-approve'
+    environmentServiceNameAzureRM: 'Azure-teolia-service-connection'
     workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure'
