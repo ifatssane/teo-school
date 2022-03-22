@@ -10,24 +10,25 @@ pool:
   vmImage: windows-latest
 
 steps:
-- task: Terraform@2
+- task: TerraformInstaller@0
   inputs:
-    TemplatePath: 'scripts/infrastructure'
-    Arguments: 'init'
-    InstallTerraform: true
-    UseAzureSub: true
-    ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
-    ConnectedServiceNameARM: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
-    ManageState: false
+    terraformVersion: 'latest'
 
-- task: Terraform@2
+- task: TerraformTaskV2@2
   inputs:
-    TemplatePath: 'scripts/infrastructure'
-    Arguments: 'destroy -auto-approve'
-    InstallTerraform: true
-    UseAzureSub: true
-    ConnectedServiceNameSelector: 'ConnectedServiceNameARM'
-    ConnectedServiceNameARM: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
-    ManageState: false
+    provider: 'azurerm'
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure'
+    backendServiceArm: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+    backendAzureRmResourceGroupName: 'jaouad-aks-dockercoins'
+    backendAzureRmStorageAccountName: 'jaouadterraformstorage'
+    backendAzureRmContainerName: 'jaouad-terraform-container'
+    backendAzureRmKey: 'terraform.tfstate'
 
-    
+- task: TerraformTaskV2@2
+  inputs:
+    provider: 'azurerm'
+    command: 'destroy'
+    commandOptions: '-auto-approve'
+    environmentServiceNameAzureRM: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+  
