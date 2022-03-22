@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: webui
-        image: dockercoinsacr.azurecr.io/jaouadifatssane/webui:#{tags}
+        image: dockercoinsacr.azurecr.io/jaouadifatssane/webui:#{tags}#
         imagePullPolicy: Always
         ports:
         - containerPort: 80

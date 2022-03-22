@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: rng
-        image: dockercoinsacr.azurecr.io/jaouadifatssane/rng:#{tags}
+        image: dockercoinsacr.azurecr.io/jaouadifatssane/rng:#{tags}#
         imagePullPolicy: Always
         ports:
         - containerPort: 80
