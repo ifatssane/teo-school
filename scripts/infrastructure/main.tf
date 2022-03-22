@@ -35,6 +35,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     type                = "VirtualMachineScaleSets"
     availability_zones  = [1, 2, 3]
     enable_auto_scaling = true
+    default_node_pool = 2
     max_count = 3
     min_count = 2
   }
