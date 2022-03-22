@@ -1,23 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webui-deployment
+  name: redis-deploy
   namespace: dockercoins
   labels:
-    app: webui-app
+    app: redis-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: webui-app
+      app: redis-app
   template:
     metadata:
       labels:
-        app: webui-app
+        app: redis-app
     spec:
       containers:
-      - name: webui
-        image: jaouadifatssane/webui:latest
-        imagePullPolicy: Always
+      - image: redis:alpine
+        name: redis
         ports:
-        - containerPort: 80
+        - containerPort: 6379

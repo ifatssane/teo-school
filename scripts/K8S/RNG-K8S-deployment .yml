@@ -2,20 +2,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: rng-deployment
+  namespace: dockercoins
   labels:
-    app: RNG
+    app: rng-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: RNG
+      app: rng-app
   template:
     metadata:
       labels:
-        app: RNG
+        app: rng-app
     spec:
       containers:
       - name: rng
-        image: dockercoinsacr.azurecr.io/jaouadifatssane/RNG:latest
+        image: jaouadifatssane/rng:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
