@@ -10,7 +10,7 @@ steps:
   displayName: 'Install Terraform'
   inputs:
     terraformVersion: 'latest'
-- task: TerraformTaskV1@0
+- task: TerraformTaskV2@2
   displayName: 'initialize Terraform'
   inputs:
     provider: 'azurerm'
@@ -22,7 +22,7 @@ steps:
     backendAzureRmKey: 'terraform.tfstate'
     workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure'
 
-- task: TerraformTaskV1@0
+- task: TerraformTaskV2@2
   displayName: 'Apply Terraform'
   inputs:
     provider: 'azurerm'
