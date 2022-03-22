@@ -30,5 +30,6 @@ steps:
     provider: 'azurerm'
     command: 'destroy'
     commandOptions: '-auto-approve'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure'
     environmentServiceNameAzureRM: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
   
