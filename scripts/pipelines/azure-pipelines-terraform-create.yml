@@ -15,7 +15,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    backendServiceArm: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+    backendServiceArm: 'Azure-teolia-service-connection'
     backendAzureRmResourceGroupName: 'jaouad-aks-dockercoins'
     backendAzureRmStorageAccountName: 'jaouadterraformstorage'
     backendAzureRmContainerName: 'jaouad-terraform-container'
@@ -28,5 +28,5 @@ steps:
     provider: 'azurerm'
     command: 'apply'
     commandOptions: '-auto-approve'
-    environmentServiceNameAzureRM: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+    environmentServiceNameAzureRM: 'Azure-teolia-service-connection'
     workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure'
