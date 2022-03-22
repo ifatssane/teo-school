@@ -20,7 +20,7 @@ steps:
     backendAzureRmStorageAccountName: 'jaouadterraformstorage'
     backendAzureRmContainerName: 'jaouad-terraform-container'
     backendAzureRmKey: 'terraform.tfstate'
-
+    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure'
 
 - task: TerraformTaskV1@0
   displayName: 'Apply Terraform'
