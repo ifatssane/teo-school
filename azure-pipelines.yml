@@ -4,58 +4,59 @@ trigger:
     - scripts/infrastructure
     - scripts/pipelines
 variables:
-  tags: $(Build.Buildid)
+  tags: 100
+  #tags: $(Build.Buildid)
 stages:
-- stage: CI
-  displayName: 'Continuous Integration'
-  jobs:
-  - job: Job_1
-    displayName: Build
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - checkout: self
-      clean: true
-    - task: Docker@2
-      displayName: Build RNG
-      condition: succeededOrFailed()
-      inputs:
-        containerRegistry: 'dockercoinsacr'
-        repository: jaouadifatssane/RNG
-        command: buildAndPush
-        Dockerfile: rng/Dockerfile
-        tags: $(tags)
-    - task: Docker@2
-      displayName: Build Hacher
-      condition: succeededOrFailed()
-      inputs:
-        containerRegistry: 'dockercoinsacr'
-        repository: jaouadifatssane/hacher
-        command: buildAndPush
-        Dockerfile: hasher/Dockerfile
-        tags: $(tags)
-    - task: Docker@2
-      displayName: Build Worker
-      condition: succeededOrFailed()
-      inputs:
-        containerRegistry: 'dockercoinsacr'
-        repository: jaouadifatssane/worker
-        command: buildAndPush
-        Dockerfile: worker/Dockerfile
-        tags: $(tags)
-    - task: Docker@2
-      displayName: Build Webui
-      condition: succeededOrFailed()
-      inputs:
-        containerRegistry: 'dockercoinsacr'
-        repository: jaouadifatssane/webui
-        command: buildAndPush
-        Dockerfile: webui/Dockerfile
-        tags: $(tags)
+# - stage: CI
+#   displayName: 'Continuous Integration'
+#   jobs:
+#   - job: Job_1
+#     displayName: Build
+#     pool:
+#       vmImage: ubuntu-latest
+#     steps:
+#     - checkout: self
+#       clean: true
+#     - task: Docker@2
+#       displayName: Build RNG
+#       condition: succeededOrFailed()
+#       inputs:
+#         containerRegistry: 'dockercoinsacr'
+#         repository: jaouadifatssane/RNG
+#         command: buildAndPush
+#         Dockerfile: rng/Dockerfile
+#         tags: $(tags)
+#     - task: Docker@2
+#       displayName: Build Hacher
+#       condition: succeededOrFailed()
+#       inputs:
+#         containerRegistry: 'dockercoinsacr'
+#         repository: jaouadifatssane/hacher
+#         command: buildAndPush
+#         Dockerfile: hasher/Dockerfile
+#         tags: $(tags)
+#     - task: Docker@2
+#       displayName: Build Worker
+#       condition: succeededOrFailed()
+#       inputs:
+#         containerRegistry: 'dockercoinsacr'
+#         repository: jaouadifatssane/worker
+#         command: buildAndPush
+#         Dockerfile: worker/Dockerfile
+#         tags: $(tags)
+#     - task: Docker@2
+#       displayName: Build Webui
+#       condition: succeededOrFailed()
+#       inputs:
+#         containerRegistry: 'dockercoinsacr'
+#         repository: jaouadifatssane/webui
+#         command: buildAndPush
+#         Dockerfile: webui/Dockerfile
+#         tags: $(tags)
 
 - stage: DeployDev
   displayName: 'Deploy to Dev env'
-  dependsOn: CI
+ # dependsOn: CI
   jobs:
   - deployment: dev_deploy
     pool:
@@ -81,6 +82,7 @@ stages:
                 useLegacyPattern: false
                 enableTelemetry: true
 
+<<<<<<< HEAD
          #   - task: KubernetesManifest@0
          #     inputs:
          #       action: 'createSecret'
@@ -88,10 +90,45 @@ stages:
          #       secretType: 'dockerRegistry'
          #       secretName: 'dockercoinsacr'
          #       dockerRegistryEndpoint: 'dockercoinsacr'
-
+=======
             - task: KubernetesManifest@0
+              displayName: 'create the K8S secret'
               inputs:
+                action: 'createSecret'
+                kubernetesServiceConnection: 'aks-connection-service'
+                secretType: 'dockerRegistry'
+                secretName: 'dockercoinsacr'
+                dockerRegistryEndpoint: 'dockercoinsacr'
+>>>>>>> 4f2fe2067a073d9b2035cff5183e042dad2a8cda
+
+            # - task: KubernetesManifest@0
+            #   inputs:
+            #       action: 'deploy'
+            #       kubernetesServiceConnection: 'aks-connection-service'
+            #       manifests: '**/*-K8S-deployment.yml'
+            #       imagePullSecrets: 'dockercoinsacr'
+            - task: Kubernetes@1
+              displayName: 'Init K8S'
+              inputs:
+<<<<<<< HEAD
                   action: 'apply'
                   kubernetesServiceConnection: 'aks-connection-service'
                   manifests: '**/*-K8S-deployment.yml'
                   imagePullSecrets: 'dockercoinsacr'
+=======
+                connectionType: 'Kubernetes Service Connection'
+                kubernetesServiceEndpoint: 'aks-connection-service'
+                command: 'apply'
+                arguments: '-f scripts/K8S/init-K8S-deployment.yml'
+                secretType: 'dockerRegistry'
+                containerRegistryType: 'Azure Container Registry'
+            - task: Kubernetes@1
+              displayName: 'Deploy services to the cluster'
+              inputs:
+                connectionType: 'Kubernetes Service Connection'
+                kubernetesServiceEndpoint: 'aks-connection-service'
+                command: 'apply'
+                arguments: '-f scripts/K8S/'
+                secretType: 'dockerRegistry'
+                containerRegistryType: 'Azure Container Registry'
+>>>>>>> 4f2fe2067a073d9b2035cff5183e042dad2a8cda
