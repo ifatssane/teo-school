@@ -92,4 +92,4 @@ stages:
               inputs:
                   action: 'deploy'
                   kubernetesServiceConnection: 'aks-connection-service'
-                  manifests: '/scripts/K8S/*-deployment.yml'
+                  manifests: '**/*-K8S-deployment.yml'
