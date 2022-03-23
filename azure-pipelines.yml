@@ -83,6 +83,7 @@ stages:
                 enableTelemetry: true
 
             - task: KubernetesManifest@0
+              displayName: 'create the K8S secret'
               inputs:
                 action: 'createSecret'
                 kubernetesServiceConnection: 'aks-connection-service'
@@ -97,6 +98,16 @@ stages:
             #       manifests: '**/*-K8S-deployment.yml'
             #       imagePullSecrets: 'dockercoinsacr'
             - task: Kubernetes@1
+              displayName: 'Init K8S'
+              inputs:
+                connectionType: 'Kubernetes Service Connection'
+                kubernetesServiceEndpoint: 'aks-connection-service'
+                command: 'apply'
+                arguments: '-f scripts/K8S/init-K8S-deployment.yml'
+                secretType: 'dockerRegistry'
+                containerRegistryType: 'Azure Container Registry'
+            - task: Kubernetes@1
+              displayName: 'Deploy services to the cluster'
               inputs:
                 connectionType: 'Kubernetes Service Connection'
                 kubernetesServiceEndpoint: 'aks-connection-service'
