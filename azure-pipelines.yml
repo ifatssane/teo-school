@@ -68,7 +68,7 @@ stages:
             - task: replacetokens@5
               displayName: Replace tokens
               inputs:
-                targetFiles: '/scripts/K8S/*.yml'
+                targetFiles: '**/*-deployment.yml'
                 encoding: 'auto'
                 tokenPattern: 'default'
                 writeBOM: true
