@@ -81,15 +81,17 @@ stages:
                 useLegacyPattern: false
                 enableTelemetry: true
 
-           # - task: KubernetesManifest@0
-           #   inputs:
-           #     action: 'createSecret'
-           #     kubernetesServiceConnection: 'aks-connection-service'
-           #     secretType: 'dockerRegistry'
-           #     dockerRegistryEndpoint: 'dockercoinsacr'
+            - task: KubernetesManifest@0
+              inputs:
+                action: 'createSecret'
+                kubernetesServiceConnection: 'aks-connection-service'
+                secretType: 'dockerRegistry'
+                secretName: 'dockercoinsacr'
+                dockerRegistryEndpoint: 'dockercoinsacr'
 
             - task: KubernetesManifest@0
               inputs:
                   action: 'deploy'
                   kubernetesServiceConnection: 'aks-connection-service'
                   manifests: '**/*-K8S-deployment.yml'
+                  imagePullSecrets: 'dockercoinsacr'
