@@ -101,6 +101,6 @@ stages:
                 connectionType: 'Kubernetes Service Connection'
                 kubernetesServiceEndpoint: 'aks-connection-service'
                 command: 'apply'
-                arguments: '-f script/K8S/*-K8S-*.yml'
+                arguments: '-f scripts/K8S/*-K8S-*.yml'
                 secretType: 'dockerRegistry'
                 containerRegistryType: 'Azure Container Registry'
