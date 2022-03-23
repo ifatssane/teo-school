@@ -4,54 +4,55 @@ trigger:
     - scripts/infrastructure
     - scripts/pipelines
 variables:
-  tags: $(Build.Buildid)
+  tags: 100
+  #tags: $(Build.Buildid)
 stages:
-- stage: CI
-  displayName: 'Continuous Integration'
-  jobs:
-  - job: Job_1
-    displayName: Build
-    pool:
-      vmImage: ubuntu-latest
-    steps:
-    - checkout: self
-      clean: true
-    - task: Docker@2
-      displayName: Build RNG
-      condition: succeededOrFailed()
-      inputs:
-        containerRegistry: 'dockercoinsacr'
-        repository: jaouadifatssane/RNG
-        command: buildAndPush
-        Dockerfile: rng/Dockerfile
-        tags: $(tags)
-    - task: Docker@2
-      displayName: Build Hacher
-      condition: succeededOrFailed()
-      inputs:
-        containerRegistry: 'dockercoinsacr'
-        repository: jaouadifatssane/hacher
-        command: buildAndPush
-        Dockerfile: hasher/Dockerfile
-        tags: $(tags)
-    - task: Docker@2
-      displayName: Build Worker
-      condition: succeededOrFailed()
-      inputs:
-        containerRegistry: 'dockercoinsacr'
-        repository: jaouadifatssane/worker
-        command: buildAndPush
-        Dockerfile: worker/Dockerfile
-        tags: $(tags)
-    - task: Docker@2
-      displayName: Build Webui
-      condition: succeededOrFailed()
-      inputs:
-        containerRegistry: 'dockercoinsacr'
-        repository: jaouadifatssane/webui
-        command: buildAndPush
-        Dockerfile: webui/Dockerfile
-        tags: $(tags)
+# - stage: CI
+#   displayName: 'Continuous Integration'
+#   jobs:
+#   - job: Job_1
+#     displayName: Build
+#     pool:
+#       vmImage: ubuntu-latest
+#     steps:
+#     - checkout: self
+#       clean: true
+#     - task: Docker@2
+#       displayName: Build RNG
+#       condition: succeededOrFailed()
+#       inputs:
+#         containerRegistry: 'dockercoinsacr'
+#         repository: jaouadifatssane/RNG
+#         command: buildAndPush
+#         Dockerfile: rng/Dockerfile
+#         tags: $(tags)
+#     - task: Docker@2
+#       displayName: Build Hacher
+#       condition: succeededOrFailed()
+#       inputs:
+#         containerRegistry: 'dockercoinsacr'
+#         repository: jaouadifatssane/hacher
+#         command: buildAndPush
+#         Dockerfile: hasher/Dockerfile
+#         tags: $(tags)
+#     - task: Docker@2
+#       displayName: Build Worker
+#       condition: succeededOrFailed()
+#       inputs:
+#         containerRegistry: 'dockercoinsacr'
+#         repository: jaouadifatssane/worker
+#         command: buildAndPush
+#         Dockerfile: worker/Dockerfile
+#         tags: $(tags)
+#     - task: Docker@2
+#       displayName: Build Webui
+#       condition: succeededOrFailed()
+#       inputs:
+#         containerRegistry: 'dockercoinsacr'
+#         repository: jaouadifatssane/webui
+#         command: buildAndPush
+#         Dockerfile: webui/Dockerfile
+#         tags: $(tags)
 
 - stage: DeployDev
   displayName: 'Deploy to Dev env'
@@ -81,13 +82,13 @@ stages:
                 useLegacyPattern: false
                 enableTelemetry: true
 
-            # - task: KubernetesManifest@0
-            #   inputs:
-            #     action: 'createSecret'
-            #     kubernetesServiceConnection: 'aks-connection-service'
-            #     secretType: 'dockerRegistry'
-            #     secretName: 'dockercoinsacr'
-            #     dockerRegistryEndpoint: 'dockercoinsacr'
+            - task: KubernetesManifest@0
+              inputs:
+                action: 'createSecret'
+                kubernetesServiceConnection: 'aks-connection-service'
+                secretType: 'dockerRegistry'
+                secretName: 'dockercoinsacr'
+                dockerRegistryEndpoint: 'dockercoinsacr'
 
             # - task: KubernetesManifest@0
             #   inputs:
