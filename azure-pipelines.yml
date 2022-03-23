@@ -87,8 +87,8 @@ stages:
                 secretType: 'dockerRegistry'
                 dockerRegistryEndpoint: 'dockercoinsacr'
 
-              - task: KubernetesManifest@0
+            - task: KubernetesManifest@0
               inputs:
-                action: 'deploy'
-                kubernetesServiceConnection: 'aks-connection-service'
-                manifests: '/scripts/K8S/*-deployment.yml'
+                  action: 'deploy'
+                  kubernetesServiceConnection: 'aks-connection-service'
+                  manifests: '/scripts/K8S/*-deployment.yml'
