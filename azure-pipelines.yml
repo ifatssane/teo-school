@@ -81,17 +81,25 @@ stages:
                 useLegacyPattern: false
                 enableTelemetry: true
 
-            - task: KubernetesManifest@0
-              inputs:
-                action: 'createSecret'
-                kubernetesServiceConnection: 'aks-connection-service'
-                secretType: 'dockerRegistry'
-                secretName: 'dockercoinsacr'
-                dockerRegistryEndpoint: 'dockercoinsacr'
+            # - task: KubernetesManifest@0
+            #   inputs:
+            #     action: 'createSecret'
+            #     kubernetesServiceConnection: 'aks-connection-service'
+            #     secretType: 'dockerRegistry'
+            #     secretName: 'dockercoinsacr'
+            #     dockerRegistryEndpoint: 'dockercoinsacr'
 
-            - task: KubernetesManifest@0
+            # - task: KubernetesManifest@0
+            #   inputs:
+            #       action: 'deploy'
+            #       kubernetesServiceConnection: 'aks-connection-service'
+            #       manifests: '**/*-K8S-deployment.yml'
+            #       imagePullSecrets: 'dockercoinsacr'
+            - task: Kubernetes@1
               inputs:
-                  action: 'deploy'
-                  kubernetesServiceConnection: 'aks-connection-service'
-                  manifests: '**/*-K8S-deployment.yml'
-                  imagePullSecrets: 'dockercoinsacr'
+                connectionType: 'Kubernetes Service Connection'
+                kubernetesServiceEndpoint: 'aks-connection-service'
+                command: 'apply'
+                arguments: '-f ''script/K8S/*-K8S-*.yml'''
+                secretType: 'dockerRegistry'
+                containerRegistryType: 'Azure Container Registry'
