@@ -56,7 +56,7 @@ stages:
 
 - stage: DeployDev
   displayName: 'Deploy to Dev env'
-  dependsOn: CI
+ # dependsOn: CI
   jobs:
   - deployment: dev_deploy
     pool:
