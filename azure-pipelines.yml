@@ -81,12 +81,12 @@ stages:
                 useLegacyPattern: false
                 enableTelemetry: true
 
-            - task: KubernetesManifest@0
-              inputs:
-                action: 'createSecret'
-                kubernetesServiceConnection: 'aks-connection-service'
-                secretType: 'dockerRegistry'
-                dockerRegistryEndpoint: 'dockercoinsacr'
+           # - task: KubernetesManifest@0
+           #   inputs:
+           #     action: 'createSecret'
+           #     kubernetesServiceConnection: 'aks-connection-service'
+           #     secretType: 'dockerRegistry'
+           #     dockerRegistryEndpoint: 'dockercoinsacr'
 
             - task: KubernetesManifest@0
               inputs:
