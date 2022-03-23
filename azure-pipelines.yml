@@ -82,15 +82,6 @@ stages:
                 useLegacyPattern: false
                 enableTelemetry: true
 
-<<<<<<< HEAD
-         #   - task: KubernetesManifest@0
-         #     inputs:
-         #       action: 'createSecret'
-         #       kubernetesServiceConnection: 'aks-connection-service'
-         #       secretType: 'dockerRegistry'
-         #       secretName: 'dockercoinsacr'
-         #       dockerRegistryEndpoint: 'dockercoinsacr'
-=======
             - task: KubernetesManifest@0
               displayName: 'create the K8S secret'
               inputs:
@@ -99,7 +90,6 @@ stages:
                 secretType: 'dockerRegistry'
                 secretName: 'dockercoinsacr'
                 dockerRegistryEndpoint: 'dockercoinsacr'
->>>>>>> 4f2fe2067a073d9b2035cff5183e042dad2a8cda
 
             # - task: KubernetesManifest@0
             #   inputs:
@@ -110,12 +100,6 @@ stages:
             - task: Kubernetes@1
               displayName: 'Init K8S'
               inputs:
-<<<<<<< HEAD
-                  action: 'apply'
-                  kubernetesServiceConnection: 'aks-connection-service'
-                  manifests: '**/*-K8S-deployment.yml'
-                  imagePullSecrets: 'dockercoinsacr'
-=======
                 connectionType: 'Kubernetes Service Connection'
                 kubernetesServiceEndpoint: 'aks-connection-service'
                 command: 'apply'
@@ -123,7 +107,7 @@ stages:
                 secretType: 'dockerRegistry'
                 containerRegistryType: 'Azure Container Registry'
             - task: Kubernetes@1
-              displayName: 'Deploy services to the cluster'
+              displayName: 'Deployment to the cluster'
               inputs:
                 connectionType: 'Kubernetes Service Connection'
                 kubernetesServiceEndpoint: 'aks-connection-service'
@@ -131,4 +115,3 @@ stages:
                 arguments: '-f scripts/K8S/'
                 secretType: 'dockerRegistry'
                 containerRegistryType: 'Azure Container Registry'
->>>>>>> 4f2fe2067a073d9b2035cff5183e042dad2a8cda
