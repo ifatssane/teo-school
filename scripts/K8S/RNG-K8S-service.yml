@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     app: rng
-  name: rng
+  name: rng-svc
 spec:
   ports:
   - port: 80

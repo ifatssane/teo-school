@@ -3,7 +3,7 @@ kind: Service
 metadata:
   labels:
     app: hacher
-  name: hacher
+  name: hacher-svc
 spec:
   ports:
   - port: 80
