@@ -4,6 +4,7 @@ metadata:
   labels:
     app: webui
   name: webui-svc
+  namespace: dockercoins
 spec:
   ports:
   - port: 80
@@ -11,4 +12,4 @@ spec:
     targetPort: 80
   selector:
     app: webui-app
-  type: NodePort
+  type: ClusterIP

@@ -6,6 +6,7 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: nginx
 spec:
+  ingressClassName: nginx
   rules:
   - http:
       paths:
@@ -16,3 +17,4 @@ spec:
             name: webui-svc
             port: 
               number: 80
+

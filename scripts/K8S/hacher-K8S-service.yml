@@ -4,6 +4,7 @@ metadata:
   labels:
     app: hacher
   name: hacher-svc
+  namespace: dockercoins
 spec:
   ports:
   - port: 80

@@ -4,6 +4,7 @@ metadata:
   labels:
     app: rng
   name: rng-svc
+  namespace: dockercoins
 spec:
   ports:
   - port: 80
