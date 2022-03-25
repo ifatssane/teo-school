@@ -6,6 +6,11 @@
 trigger:
 - none
 
+schedules:
+- cron: "0 20 * * 0-4"
+  displayName: Daily night clean
+  always: true
+
 pool:
   vmImage: windows-latest
 
