@@ -1,11 +1,5 @@
 #In Azure, all infrastructure elements such as virtual machines, storage, and our Kubernetes cluster need to be attached to a resource group.
 
-# resource "azurerm_resource_group" "aks-rg" {
-#   name     = var.resource_group_name
-#   resource_group_name = var.resource_group_name
-#   location = var.location
-# }
-
 resource "azurerm_role_assignment" "role_acrpull" {
   scope                            = azurerm_container_registry.acr.id
   role_definition_name             = "AcrPull"
@@ -33,7 +27,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_count          = var.system_node_count
     vm_size             = "Standard_DS2_v2"
     type                = "VirtualMachineScaleSets"
-    availability_zones  = [1, 2, 3]
+    zones  =  ["1", "2", "3"]
     enable_auto_scaling = true
     max_count = 3
     min_count = 2
@@ -44,8 +38,31 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 
   network_profile {
-    load_balancer_sku = "Standard"
+    load_balancer_sku = "standard"
     network_plugin    = "azure"
     network_policy    = "calico"
   }
+}
+
+ resource "kubernetes_namespace" "monitoring_namespace" {
+  metadata {
+    name = "monitoring"
+  }
+
+  depends_on = [
+    azurerm_kubernetes_cluster.aks
+  ]
+} 
+
+resource "helm_release" "prometheus" {
+  chart      = "kube-prometheus-stack"
+  name       = "prometheus-stack"
+  namespace  = "monitoring"
+  repository = "https://prometheus-community.github.io/helm-charts"
+  version    = "34.6.0"
+  values = [file("configuration/prometheus-stack-config.yml")]
+
+  depends_on = [
+    kubernetes_namespace.monitoring_namespace,
+  ]
 }
