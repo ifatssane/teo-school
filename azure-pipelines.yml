@@ -25,7 +25,7 @@ stages:
          organization: 'ifatssane'
          scannerMode: 'MSBuild'
          projectName: 'teo-school'
-
+         projectKey: '60164a9afb9e85f47086b32b04bda64090f872c8'
     
      - task: SonarCloudAnalyze@1
      
