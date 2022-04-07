@@ -1,0 +1,66 @@
+prometheusOperator:
+  enabled: true
+nodeExporter:
+  enabled: true
+prometheus:
+  enabled: true
+  ingress:
+    enabled: true
+    hosts:
+    - prometheus.dockercoins
+  prometheusSpec:
+    replicas: 2
+    retention: 6h
+    serviceMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+    thanos:
+      objectStorageConfig:
+         key: thanos.yml
+         name: thanos-objstore-config
+    prometheusExternalLabelNameClear: true
+grafana:
+  enabled: true
+  ingress:
+    enabled: true
+    hosts:
+    - grafana.dockercoins
+  adminPassword: jaouad-dev-password
+  additionalDataSources:
+  - name: Thanos
+    url: http://thanos-query-frontend.monitoring:9090
+    type: prometheus
+    access: proxy
+    isDefault: true
+  defaultDashboardsEnabled: true
+  sidecar:
+    datasources:
+      defaultDatasourceEnabled: false
+kubeControllerManager:
+  enable: true
+  service:
+    enable: true
+    port: 10257
+    targetPort: 10257
+  serviceMonitor:
+    enable: true
+    https: true
+    insecureSkipVerify: true
+    serverName: 127.0.0.1
+kube-state-metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+    scheme: https
+    insecureSkipVerify: true
+    caFile: /etc/prometheus/secrets/etcd-certs/ca.crt
+    certFile: /etc/prometheus/secrets/etcd-certs/healthcheck-client.crt
+    keyFile: /etc/prometheus/secrets/etcd-certs/healthcheck-client.key
+kubeScheduler:
+  service:
+    port: 10259
+    targetPort: 10259
+  serviceMonitor:
+    https: true
+    insecureSkipVerify: true
+    serverName: 127.0.0.1
+

@@ -1,0 +1,6 @@
+  type: AZURE
+  config:
+    storage_account: "dockercoinsmonitoring"
+    storage_account_key: "h/fQmVELH/fUHwtEfpRFxzV3FL/efw1MK3RvhMi7TO1dRqhdcyvPYwVZQ+nSF2dpuHU7CefEmqBtqUFcTBkOpw=="
+    container: "thanos"
+    max_retries: 0

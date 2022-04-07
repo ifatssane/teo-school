@@ -27,10 +27,10 @@ resource "azurerm_kubernetes_cluster" "aks" {
     node_count          = var.system_node_count
     vm_size             = "Standard_DS2_v2"
     type                = "VirtualMachineScaleSets"
-    zones  =  ["1", "2", "3"]
+    zones               = ["1", "2", "3"]
     enable_auto_scaling = true
-    max_count = 3
-    min_count = 2
+    max_count           = 4
+    min_count           = 3
   }
 
   identity {
@@ -44,7 +44,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   }
 }
 
- resource "kubernetes_namespace" "monitoring_namespace" {
+resource "kubernetes_namespace" "monitoring-namespace" {
   metadata {
     name = "monitoring"
   }
@@ -52,17 +52,44 @@ resource "azurerm_kubernetes_cluster" "aks" {
   depends_on = [
     azurerm_kubernetes_cluster.aks
   ]
-} 
+}
 
-resource "helm_release" "prometheus" {
+resource "kubernetes_secret" "storage-secret" {
+
+      metadata {
+        name      = "thanos-objstore-config"
+        namespace = "monitoring"
+      }
+      data = {
+        "thanos.yml" = file("configuration/monitoring/storage.yml")
+      }
+  depends_on = [
+    kubernetes_namespace.monitoring-namespace
+  ]
+}
+
+resource "helm_release" "prometheus-operator" {
   chart      = "kube-prometheus-stack"
-  name       = "prometheus-stack"
+  name       = "prometheus-operator"
   namespace  = "monitoring"
   repository = "https://prometheus-community.github.io/helm-charts"
-  version    = "34.6.0"
-  values = [file("configuration/prometheus-stack-config.yml")]
+  version    = "34.9.0"
+  values     = [file("configuration/monitoring/prometheus-operator-values.yml")]
 
   depends_on = [
-    kubernetes_namespace.monitoring_namespace,
+    kubernetes_secret.storage-secret
+  ]
+}
+
+resource "helm_release" "thanos" {
+  chart      = "thanos"
+  name       = "thanos"
+  namespace  = "monitoring"
+  repository = "https://charts.bitnami.com/bitnami"
+  version    = "10.3.2"
+  values     = [file("configuration/monitoring/thanos-values.yml")]
+
+  depends_on = [
+    helm_release.prometheus-operator,
   ]
 }

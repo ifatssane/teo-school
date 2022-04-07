@@ -1,0 +1,45 @@
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: true
+objstoreConfig: |-
+  type: AZURE
+  config:
+    storage_account: "dockercoinsmonitoring"
+    storage_account_key: "h/fQmVELH/fUHwtEfpRFxzV3FL/efw1MK3RvhMi7TO1dRqhdcyvPYwVZQ+nSF2dpuHU7CefEmqBtqUFcTBkOpw=="
+    container: "thanos"
+    max_retries: 3
+query:
+  enabled: true
+  dnsDiscovery:
+    enabled: true
+    sidecarsService: prometheus-operated
+    sidecarsNamespace: monitoring
+  extraFlags:
+  - --query.auto-downsampling
+  replicaLabel: prometheus_replica
+queryFrontend:
+  enabled: true
+  ingress:
+    enabled: true
+    hostname: thanos.dockercoins
+  config: |-
+    type: IN-MEMORY
+    config:
+      max_size: 1GB
+      max_size_items: 0
+      validity: 0s
+storegateway:
+  enabled: true
+  persistence:
+    enabled: false
+compactor:
+  enabled: true
+  persistence:
+    enabled: false
+  retentionResolutionRaw: 2d
+  retentionResolution5m: 30d
+  retentionResolution1h: 1y
+bucketweb:
+  enabled: true
+

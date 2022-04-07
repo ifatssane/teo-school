@@ -18,9 +18,9 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "3.0.2"
     }
-/*      helm = {
-       source  = "hashicorp/helm"
-       version = "~> 3.0.0"
-     }  */
+    kubectl = {
+      source  = "gavinbunney/kubectl"
+      version = ">= 1.7.0"
+    }
   }
 }
