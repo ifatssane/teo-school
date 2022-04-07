@@ -18,6 +18,17 @@ stages:
      steps:
      - checkout: self
        clean: true
+
+     - task: SonarCloudPrepare@1
+       inputs:
+         SonarCloud: 'SonarCloud'
+         organization: 'ifatssane'
+         scannerMode: 'MSBuild'
+         projectKey: 'ifatssane_teo-school'
+         projectName: 'teo-school'
+    
+     - task: SonarCloudAnalyze@1
+     
      - task: Docker@2
        displayName: Build RNG
        condition: succeededOrFailed()
