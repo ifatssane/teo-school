@@ -22,9 +22,9 @@ stages:
      - task: SonarCloudPrepare@1
        inputs:
          SonarCloud: 'SonarCloud'
-         organization: 'ifatssane'
+         organization: 'jaouadifatssane'
          scannerMode: 'MSBuild'
-         projectName: 'teo-school'
+         projectName: 'TeoSchool-Jaouad'
          projectKey: '60164a9afb9e85f47086b32b04bda64090f872c8'
     
      - task: SonarCloudAnalyze@1
