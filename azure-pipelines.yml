@@ -50,7 +50,7 @@ stages:
            pip install flask pytest pytest-azurepipelines
            python -m pytest rng/
        displayName: 'RNG Tests'
-       condition: succeeded()
+       condition: succeededOrFailed()
 
  ###Tests end####
      - task: Docker@2
