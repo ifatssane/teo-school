@@ -56,7 +56,7 @@ stages:
        displayName: 'Install dependencies in Python $(python.version)'
      - script: |
           pip install pytest pytest-azurepipelines
-          python -m pytest
+          python -m pytest rng/
        displayName: 'Run Tests using Python $(python.version)'
  
      - task: Docker@2
