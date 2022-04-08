@@ -25,6 +25,7 @@ stages:
          organization: 'ifatssane'
          scannerMode: 'CLI'
          configMode: 'file'
+
     #  - task: SonarCloudPrepare@1
     #    inputs:
     #      SonarCloud: 'SonarCloud'
