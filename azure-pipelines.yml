@@ -20,15 +20,15 @@ stages:
      - checkout: self
        clean: true
   
-     - task: SonarCloudPrepare@1
-       inputs:
-         SonarCloud: 'SonarCloud'
-         organization: 'jaouadifatssane'
-         scannerMode: 'MSBuild'
-         projectName: 'TeoSchool-Jaouad'
-         projectKey: '60164a9afb9e85f47086b32b04bda64090f872c8'
+    #  - task: SonarCloudPrepare@1
+    #    inputs:
+    #      SonarCloud: 'SonarCloud'
+    #      organization: 'jaouadifatssane'
+    #      scannerMode: 'MSBuild'
+    #      projectName: 'TeoSchool-Jaouad'
+    #      projectKey: '60164a9afb9e85f47086b32b04bda64090f872c8'
     
-     - task: SonarCloudAnalyze@1
+    #  - task: SonarCloudAnalyze@1
     ##RNG Tests begin##  
      - task: UsePythonVersion@0
        displayName: 'Use Python $(pythonVersion)'
