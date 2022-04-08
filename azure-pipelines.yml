@@ -38,6 +38,12 @@ stages:
          command: buildAndPush
          Dockerfile: rng/Dockerfile
          tags: $(tags)
+     
+     - script: |
+        python -m pip install flake8
+        flake8 .
+        displayName: 'Run lint tests'
+
      - task: Docker@2
        displayName: Build Hacher
        condition: succeededOrFailed()
