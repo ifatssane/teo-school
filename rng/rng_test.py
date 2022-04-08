@@ -1,5 +1,3 @@
-import sys
-sys.path.append('/rng/')
 import rng
 import socket
 import pytest
