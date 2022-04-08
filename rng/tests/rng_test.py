@@ -12,4 +12,4 @@ def test_index_content(index_test):
 
 def test_rng_status():
     statuscode = rng.rng(32).status_code
-    assert statuscode == 400
+    assert statuscode == 200
