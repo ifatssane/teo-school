@@ -22,10 +22,10 @@ stages:
      - task: SonarCloudPrepare@1
        inputs:
          SonarCloud: 'SonarCloud'
-         organization: 'ifatssane'
+         organization: 'jaouadifatssane'
          scannerMode: 'CLI'
          configMode: 'manual'
-         cliProjectKey: '60164a9afb9e85f47086b32b04bda64090f872c8'
+         cliProjectKey: 'Jaouadifatssane_TeoSchool-Jaouad'
          cliProjectName: 'TeoSchool-Jaouad'
          cliSources: '.'
     #  - task: SonarCloudPrepare@1
@@ -37,6 +37,7 @@ stages:
     #      projectKey: '60164a9afb9e85f47086b32b04bda64090f872c8'
     
      - task: SonarQubeAnalyze@5
+
     ##RNG Tests begin##  
      - task: UsePythonVersion@0
        displayName: 'Use Python $(pythonVersion)'
