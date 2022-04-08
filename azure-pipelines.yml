@@ -24,8 +24,10 @@ stages:
          SonarCloud: 'SonarCloud'
          organization: 'ifatssane'
          scannerMode: 'CLI'
-         configMode: 'file'
-         projectKey: '60164a9afb9e85f47086b32b04bda64090f872c8'
+         configMode: 'manual'
+         cliProjectKey: '60164a9afb9e85f47086b32b04bda64090f872c8'
+         cliProjectName: 'TeoSchool-Jaouad'
+         cliSources: '.'
     #  - task: SonarCloudPrepare@1
     #    inputs:
     #      SonarCloud: 'SonarCloud'
