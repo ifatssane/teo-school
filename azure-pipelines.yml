@@ -36,8 +36,7 @@ stages:
     #      projectName: 'TeoSchool-Jaouad'
     #      projectKey: '60164a9afb9e85f47086b32b04bda64090f872c8'
     
-     - task: SonarCloudAnalyze@1
-        
+     - task: SonarQubeAnalyze@5
     ##RNG Tests begin##  
      - task: UsePythonVersion@0
        displayName: 'Use Python $(pythonVersion)'
