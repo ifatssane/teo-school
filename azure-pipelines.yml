@@ -54,7 +54,7 @@ stages:
        condition: succeededOrFailed()
      - script: |
            pip install pytest pytest-azurepipelines
-           python -m pytest rng/tests/
+           python -m pytest rng/
        displayName: 'Run Tests using Python $(pythonVersion)'
        condition: succeededOrFailed()
  ###Tests end####
