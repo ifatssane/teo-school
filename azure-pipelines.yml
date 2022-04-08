@@ -29,18 +29,7 @@ stages:
          projectKey: '60164a9afb9e85f47086b32b04bda64090f872c8'
     
      - task: SonarCloudAnalyze@1
-     
-     - task: Docker@2
-       displayName: Build RNG
-       condition: succeededOrFailed()
-       inputs:
-         containerRegistry: 'dockercoinsacr'
-         repository: jaouadifatssane/RNG
-         command: buildAndPush
-         Dockerfile: rng/Dockerfile
-         tags: $(tags)
-
-   ##RNG Tests begin##  
+    ##RNG Tests begin##  
      - task: UsePythonVersion@0
        displayName: 'Use Python $(pythonVersion)'
        inputs:
@@ -50,12 +39,21 @@ stages:
            pip install flask pytest pytest-azurepipelines
            python -m pytest rng/
        displayName: 'RNG Tests'
-       condition: succeededOrFailed()
+       condition: succeeded()
+     ###Tests end####
+     - task: Docker@2
+       displayName: Build RNG
+       condition: succeeded()
+       inputs:
+         containerRegistry: 'dockercoinsacr'
+         repository: jaouadifatssane/RNG
+         command: buildAndPush
+         Dockerfile: rng/Dockerfile
+         tags: $(tags)
 
- ###Tests end####
      - task: Docker@2
        displayName: Build Hacher
-       condition: succeededOrFailed()
+       condition: succeeded()
        inputs:
          containerRegistry: 'dockercoinsacr'
          repository: jaouadifatssane/hacher
@@ -64,7 +62,7 @@ stages:
          tags: $(tags)
      - task: Docker@2
        displayName: Build Worker
-       condition: succeededOrFailed()
+       condition: succeeded()
        inputs:
          containerRegistry: 'dockercoinsacr'
          repository: jaouadifatssane/worker
@@ -73,7 +71,7 @@ stages:
          tags: $(tags)
      - task: Docker@2
        displayName: Build Webui
-       condition: succeededOrFailed()
+       condition: succeeded()
        inputs:
          containerRegistry: 'dockercoinsacr'
          repository: jaouadifatssane/webui
@@ -163,14 +161,4 @@ stages:
                 command: 'apply'
                 arguments: '-f scripts/K8S/prometheus/namespaces.yml'
                 secretType: 'dockerRegistry'
-                containerRegistryType: 'Azure Container Registry'
-
-            - task: Kubernetes@1
-              displayName: 'Install Prometheus'
-              inputs:
-                connectionType: 'Kubernetes Service Connection'
-                kubernetesServiceEndpoint: 'aks-connection-service'
-                command: 'apply'
-                arguments: '-f scripts/K8S/prometheus/'
-                secretType: 'dockerRegistry'
-                containerRegistryType: 'Azure Container Registry'        
+                containerRegistryType: 'Azure Container Registry'      
