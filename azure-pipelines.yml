@@ -41,8 +41,9 @@ stages:
          tags: $(tags)
 
    ##Tests begin##  
+   #docker run jaouadifatssane/RNG:$(tags) 
+
      - script: |
-        docker run jaouadifatssane/RNG:$(tags) 
         python -m pytest rng/
        displayName: 'Run PyTest'
     #  - task: UsePythonVersion@0
