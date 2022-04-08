@@ -15,12 +15,7 @@ stages:
      displayName: Build
      pool:
        vmImage: ubuntu-latest
-     strategy:
-        matrix:
-          Python37:
-            python.version: '3.7'
-          Python38:
-            python.version: '3.8'
+
      steps:
      - checkout: self
        clean: true
@@ -45,11 +40,11 @@ stages:
          Dockerfile: rng/Dockerfile
          tags: $(tags)
 
-   ##Test##  
+   ##Tests begin##  
      - task: UsePythonVersion@0
        displayName: 'Use Python $(python.version)'
        inputs:
-          versionSpec: '$(python.version)'
+          versionSpec: '3.8'
      - script: |
           python -m pip install --upgrade pip
           pip install flask
@@ -58,7 +53,7 @@ stages:
           pip install pytest pytest-azurepipelines
           python -m pytest rng/
        displayName: 'Run Tests using Python $(python.version)'
- 
+ ###Tests end####
      - task: Docker@2
        displayName: Build Hacher
        condition: succeededOrFailed()
