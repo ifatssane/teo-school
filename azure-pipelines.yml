@@ -42,7 +42,8 @@ stages:
 
    ##Tests begin##  
      - script: |
-        docker run jaouadifatssane/RNG:$(tags) python rng/*test*
+        docker run jaouadifatssane/RNG:$(tags) 
+        python -m pytest rng/
        displayName: 'Run PyTest'
     #  - task: UsePythonVersion@0
     #    displayName: 'Use Python 3.8'
