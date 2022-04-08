@@ -4,7 +4,6 @@ trigger:
     - scripts/infrastructure
     - scripts/pipelines
 variables:
-  #tags: 100
   tags: 1.$(Build.Buildid)
   pythonVersion: 3.8
   ingressScriptURL: 'https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.2/deploy/static/provider/cloud/deploy.yaml'
@@ -48,15 +47,11 @@ stages:
            versionSpec: '$(pythonVersion)'
        condition: succeededOrFailed()
      - script: |
-           python -m pip install --upgrade pip
-           pip install flask
-       displayName: 'Install dependencies in Python $(pythonVersion)'
-       condition: succeededOrFailed()
-     - script: |
-           pip install pytest pytest-azurepipelines
+           pip install flask pytest pytest-azurepipelines
            python -m pytest rng/
-       displayName: 'Run Tests using Python $(pythonVersion)'
-       condition: succeededOrFailed()
+       displayName: 'RNG Tests'
+       condition: succeeded()
+
  ###Tests end####
      - task: Docker@2
        displayName: Build Hacher
