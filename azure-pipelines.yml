@@ -41,8 +41,9 @@ stages:
      
      - script: |
         python -m pip install flake8
-        flake8 .
-        displayName: 'Run lint tests'
+        flake8 rng/
+       displayName: 'Run lint tests'
+       condition: succeededOrFailed()
 
      - task: Docker@2
        displayName: Build Hacher
