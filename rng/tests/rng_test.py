@@ -1,4 +1,4 @@
-from .. import rng
+from rng.rng.py import rng
 import socket
 import pytest
 
