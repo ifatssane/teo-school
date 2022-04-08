@@ -40,9 +40,10 @@ stages:
          tags: $(tags)
      
      - script: |
-        python -m pip install flake8
-        flake8 rng/
-       displayName: 'Run lint tests'
+        pip install pytest pytest-azurepipelines
+        pip install pytest-cov
+        pytest rng/ --junitxml=junit/rng-test-results.xml --cov=. --cov-report=xml
+       displayName: 'RNG pytest'
        condition: succeededOrFailed()
 
      - task: Docker@2
