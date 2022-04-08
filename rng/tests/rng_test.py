@@ -1,4 +1,6 @@
-from rng.rng.py import rng
+import sys
+sys.path.append('../rng')
+import rng
 import socket
 import pytest
 
