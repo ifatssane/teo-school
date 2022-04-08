@@ -6,6 +6,7 @@ trigger:
 variables:
   #tags: 100
   tags: 1.$(Build.Buildid)
+  pythonVersion: 3.8
   ingressScriptURL: 'https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.2/deploy/static/provider/cloud/deploy.yaml'
 stages:
  - stage: CI
@@ -40,27 +41,21 @@ stages:
          Dockerfile: rng/Dockerfile
          tags: $(tags)
 
-   ##Tests begin##  
-   #docker run jaouadifatssane/RNG:$(tags) 
-
-    #  - script: |
-    #     python -m pytest rng/
-    #    displayName: 'Run PyTest'
-    #    condition: succeededOrFailed()
+   ##RNG Tests begin##  
      - task: UsePythonVersion@0
-       displayName: 'Use Python 3.8'
+       displayName: 'Use Python $(pythonVersion)'
        inputs:
-           versionSpec: '3.8'
+           versionSpec: '$(pythonVersion)'
        condition: succeededOrFailed()
      - script: |
            python -m pip install --upgrade pip
            pip install flask
-       displayName: 'Install dependencies in Python 3.8'
+       displayName: 'Install dependencies in Python $(pythonVersion)'
        condition: succeededOrFailed()
      - script: |
            pip install pytest pytest-azurepipelines
-           python -m pytest rng/
-       displayName: 'Run Tests using Python 3.8'
+           python -m pytest rng/tests/
+       displayName: 'Run Tests using Python $(pythonVersion)'
        condition: succeededOrFailed()
  ###Tests end####
      - task: Docker@2
