@@ -15,10 +15,16 @@ stages:
      displayName: Build
      pool:
        vmImage: ubuntu-latest
+     strategy:
+        matrix:
+          Python37:
+            python.version: '3.7'
+          Python38:
+            python.version: '3.8'
      steps:
      - checkout: self
        clean: true
-
+  
      - task: SonarCloudPrepare@1
        inputs:
          SonarCloud: 'SonarCloud'
@@ -38,14 +44,21 @@ stages:
          command: buildAndPush
          Dockerfile: rng/Dockerfile
          tags: $(tags)
-     
-     - script: |
-        pip install pytest pytest-azurepipelines
-        pip install pytest-cov
-        pytest rng/ --junitxml=junit/rng-test-results.xml --cov=. --cov-report=xml
-       displayName: 'RNG pytest'
-       condition: succeededOrFailed()
 
+   ##Test##  
+     - task: UsePythonVersion@0
+       displayName: 'Use Python $(python.version)'
+       inputs:
+          versionSpec: '$(python.version)'
+     - script: |
+          python -m pip install --upgrade pip
+          pip install flask
+       displayName: 'Install dependencies in Python $(python.version)'
+     - script: |
+          pip install pytest pytest-azurepipelines
+          python -m pytest
+       displayName: 'Run Tests using Python $(python.version)'
+ 
      - task: Docker@2
        displayName: Build Hacher
        condition: succeededOrFailed()
