@@ -126,7 +126,7 @@ stages:
                 dockerRegistryEndpoint: 'dockercoinsacr'
 
             - task: Kubernetes@1
-              displayName: 'Init K8S'
+              displayName: 'Create namespace'
               inputs:
                 connectionType: 'Kubernetes Service Connection'
                 kubernetesServiceEndpoint: 'aks-connection-service'
@@ -150,14 +150,5 @@ stages:
                 kubernetesServiceEndpoint: 'aks-connection-service'
                 command: 'apply'
                 arguments: '-f $(ingressScriptURL)'
-                secretType: 'dockerRegistry'
-                containerRegistryType: 'Azure Container Registry'
-            - task: Kubernetes@1
-              displayName: 'Deploy Ingress LoadBalancer'
-              inputs:
-                connectionType: 'Kubernetes Service Connection'
-                kubernetesServiceEndpoint: 'aks-connection-service'
-                command: 'apply'
-                arguments: '-f scripts/K8S/ingress.yml'
                 secretType: 'dockerRegistry'
                 containerRegistryType: 'Azure Container Registry'
