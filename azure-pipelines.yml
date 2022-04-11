@@ -161,13 +161,3 @@ stages:
                 arguments: '-f scripts/K8S/ingress.yml'
                 secretType: 'dockerRegistry'
                 containerRegistryType: 'Azure Container Registry'
-
-            - task: Kubernetes@1
-              displayName: 'Init Prometheus'
-              inputs:
-                connectionType: 'Kubernetes Service Connection'
-                kubernetesServiceEndpoint: 'aks-connection-service'
-                command: 'apply'
-                arguments: '-f scripts/K8S/prometheus/namespaces.yml'
-                secretType: 'dockerRegistry'
-                containerRegistryType: 'Azure Container Registry'      
