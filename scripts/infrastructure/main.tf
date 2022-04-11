@@ -15,6 +15,15 @@ resource "azurerm_container_registry" "acr" {
   admin_enabled       = false
 }
 
+# resource "azuredevops_serviceendpoint_azurecr" "azurecr" {
+#   project_id             = "TeoSchool-Jaouad"
+#   service_endpoint_name  = "Sample AzureCR"
+#   resource_group            = var.resource_group_name
+#   azurecr_name              = var.acr_name
+#   azurecr_subscription_name = "teolia-school-01"
+#   azurecr_subscription_id = "319819ff-ed9b-4c33-a3d3-d7833a1a5a54"
+# }
+
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = var.cluster_name
   kubernetes_version  = var.kubernetes_version

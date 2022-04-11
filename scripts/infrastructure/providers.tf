@@ -22,5 +22,9 @@ terraform {
       source  = "gavinbunney/kubectl"
       version = ">= 1.7.0"
     }
+    # azuredevops = {
+    #   source = "microsoft/azuredevops"
+    #   version = ">=0.1.0"
+    # }
   }
 }
