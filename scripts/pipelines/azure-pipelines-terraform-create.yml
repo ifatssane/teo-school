@@ -18,16 +18,16 @@ steps:
     backendServiceArm: 'Azure-teolia-service-connection'
     backendAzureRmResourceGroupName: 'jaouad-aks-dockercoins'
     backendAzureRmStorageAccountName: 'jaouadterraformstorage'
-    backendAzureRmContainerName: 'jaouad-terraform-container'
+    backendAzureRmContainerName: 'jaouad-terraform-container-app-services'
     backendAzureRmKey: 'terraform.tfstate'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure/appServices'
 - task: TerraformTaskV2@2
   displayName: 'Plan Terraform'
   inputs:
     provider: 'azurerm'
     command: 'plan'
     environmentServiceNameAzureRM: 'Azure-teolia-service-connection'    
-    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure/appServices'
 
 - task: TerraformTaskV2@2
   displayName: 'Apply Terraform'
@@ -36,4 +36,4 @@ steps:
     command: 'apply'
     commandOptions: '-auto-approve'
     environmentServiceNameAzureRM: 'Azure-teolia-service-connection'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure/appServices'
