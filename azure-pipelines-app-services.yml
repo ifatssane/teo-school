@@ -66,7 +66,7 @@ stages:
        inputs:
           azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
           appType: 'functionApp'
-          appName: 'rng-function-app'
+          appName: 'rng-function-linux-app'
           package: '$(Pipeline.Workspace)'
           deploymentMethod: 'auto'
 ##### Fin RNG ####
