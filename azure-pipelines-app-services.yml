@@ -1,0 +1,118 @@
+trigger:
+  paths:
+    exclude:
+    - scripts/infrastructure
+    - scripts/pipelines
+variables:
+  tags: 1.$(Build.Buildid)
+  pythonVersion: 3.8
+stages:
+ - stage: CI
+   displayName: 'Continuous Integration'
+   jobs:
+   - job: Job_1
+     displayName: Build
+     pool:
+       vmImage: ubuntu-latest
+
+     steps:
+     - checkout: self
+       clean: true
+     - task: SonarCloudPrepare@1
+       inputs:
+         SonarCloud: 'SonarCloud'
+         organization: 'jaouadifatssane'
+         scannerMode: 'CLI'
+         configMode: 'manual'
+         cliProjectKey: 'Jaouadifatssane_TeoSchool-Jaouad'
+         cliProjectName: 'TeoSchool-Jaouad'
+         cliSources: '.'
+
+     - task: SonarCloudAnalyze@1
+
+    ##RNG Tests begin##  
+     - task: UsePythonVersion@0
+       displayName: 'Use Python $(pythonVersion)'
+       inputs:
+           versionSpec: '$(pythonVersion)'
+       condition: succeededOrFailed()
+     - script: |
+           pip install flask pytest pytest-azurepipelines
+           python -m pytest rng/
+       displayName: 'RNG Tests'
+       condition: succeeded()
+     ###Tests end####
+     
+     - task: Docker@2
+       displayName: Build RNG
+       condition: succeeded()
+       inputs:
+         containerRegistry: 'dockercoinsacr'
+         repository: jaouadifatssane/RNG
+         command: buildAndPush
+         Dockerfile: rng/Dockerfile
+         tags: $(tags)
+
+     - task: Docker@2
+       displayName: Build Hacher
+       condition: succeeded()
+       inputs:
+         containerRegistry: 'dockercoinsacr'
+         repository: jaouadifatssane/hacher
+         command: buildAndPush
+         Dockerfile: hasher/Dockerfile
+         tags: $(tags)
+     - task: Docker@2
+       displayName: Build Worker
+       condition: succeeded()
+       inputs:
+         containerRegistry: 'dockercoinsacr'
+         repository: jaouadifatssane/worker
+         command: buildAndPush
+         Dockerfile: worker/Dockerfile
+         tags: $(tags)
+     - task: Docker@2
+       displayName: Build Webui
+       condition: succeeded()
+       inputs:
+         containerRegistry: 'dockercoinsacr'
+         repository: jaouadifatssane/webui
+         command: buildAndPush
+         Dockerfile: webui/Dockerfile
+         tags: $(tags)
+
+ - stage: DeployDev
+   displayName: 'Deploy to Dev env'
+  # dependsOn: CI
+   jobs:
+   - deployment: dev_deploy
+     pool:
+       vmImage: ubuntu-latest
+     environment: 'DevEnv'
+     strategy:
+      runOnce:
+        deploy:
+          steps:
+            - checkout: self 
+            - task: replacetokens@5
+              displayName: Replace tokens
+              inputs:
+                targetFiles: '**/*-deployment.yml'
+                encoding: 'auto'
+                tokenPattern: 'default'
+                writeBOM: true
+                actionOnMissing: 'warn'
+                keepToken: false
+                actionOnNoFiles: 'warn'
+                enableTransforms: false
+                enableRecursion: false
+                useLegacyPattern: false
+                enableTelemetry: true
+
+            - task: AzureRmWebAppDeployment@4
+              inputs:
+                ConnectionType: 'AzureRM'
+                azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+                appType: 'webAppContainer'
+                WebAppName: 'app-name-test-worker'
+                DockerRepository: 'jaouadifatssane/worker:$(tags)'
