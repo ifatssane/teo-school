@@ -43,15 +43,22 @@ stages:
        condition: succeeded()
      ###Tests end####
      
-     - task: Docker@2
-       displayName: Build RNG
-       condition: succeeded()
+#### RNG #####
+
+     - bash: |
+          pip install flask
+       displayName: 'Install RNG Dependencies'
+
+     - task: ArchiveFiles@2
+       displayName: 'Archive files'
        inputs:
-         containerRegistry: 'dockercoinsacr'
-         repository: jaouadifatssane/RNG
-         command: buildAndPush
-         Dockerfile: rng/Dockerfile
-         tags: $(tags)
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+          includeRootFolder: false
+
+     - task: PublishBuildArtifacts@1
+       displayName: 'Publish Artifact: drop'
+
+##### Fin RNG ####
 
      - task: Docker@2
        displayName: Build Hacher
