@@ -52,7 +52,7 @@ stages:
      - task: ArchiveFiles@2
        displayName: 'Archive files'
        inputs:
-          rootFolderOrFile: '$(System.DefaultWorkingDirectory)'
+          rootFolderOrFile: '$(System.DefaultWorkingDirectory)/rng'
           includeRootFolder: false
 
      - task: PublishBuildArtifacts@1
@@ -67,7 +67,7 @@ stages:
           azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
           appType: 'functionApp'
           appName: 'rng-function-app'
-          package: '$(Pipeline.Workspace)'
+          package: '$(Build.ArtifactStagingDirectory)'
           deploymentMethod: 'auto'
 ##### Fin RNG ####
 
