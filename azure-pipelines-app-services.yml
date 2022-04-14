@@ -48,12 +48,12 @@ stages:
      - bash: |
           pip install flask
        displayName: 'Install RNG Dependencies'
-       workingDirectory: $(Build.ArtifactStagingDirectory)/rng
+       workingDirectory: rng/
 
      - task: PublishBuildArtifacts@1
        displayName: 'Publish Artifact: drop'
        inputs:
-         PathtoPublish: '$(Build.ArtifactStagingDirectory)/rng'
+         PathtoPublish: 'rng/'
          ArtifactName: 'rng'
          publishLocation: 'Container'
       
@@ -62,7 +62,7 @@ stages:
           azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
           appType: 'functionApp'
           appName: 'rng-function-app'
-          package: '$(Build.ArtifactStagingDirectory)'
+          package: 'rng/'
           deploymentMethod: 'auto'
 ##### Fin RNG ####
 
