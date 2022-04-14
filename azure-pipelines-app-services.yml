@@ -57,12 +57,19 @@ stages:
          ArtifactName: 'rng'
          publishLocation: 'Container'
       
+     - task: ArchiveFiles@2
+       inputs:
+         rootFolderOrFile: 'rng/'
+         includeRootFolder: true
+         archiveType: 'zip'
+         archiveFile: '$(Build.ArtifactStagingDirectory)/rng-$(Build.BuildId).zip'
+         replaceExistingArchive: true
      - task: AzureFunctionApp@1
        inputs:
           azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
           appType: 'functionApp'
           appName: 'rng-function-app'
-          package: 'rng/'
+          package: '$(Build.ArtifactStagingDirectory)/rng-$(Build.BuildId).zip'
           deploymentMethod: 'auto'
 ##### Fin RNG ####
 
