@@ -50,13 +50,6 @@ stages:
        displayName: 'Install RNG Dependencies'
        workingDirectory: rng/
 
-     - task: PublishBuildArtifacts@1
-       displayName: 'Publish Artifact: drop'
-       inputs:
-         PathtoPublish: 'rng/'
-         ArtifactName: 'rng'
-         publishLocation: 'Container'
-      
      - task: ArchiveFiles@2
        inputs:
          rootFolderOrFile: 'rng/'
@@ -64,6 +57,14 @@ stages:
          archiveType: 'zip'
          archiveFile: '$(Build.ArtifactStagingDirectory)/rng-$(Build.BuildId).zip'
          replaceExistingArchive: true
+
+     - task: PublishBuildArtifacts@1
+       displayName: 'Publish Artifact: drop'
+       inputs:
+         PathtoPublish: 'rng/'
+         ArtifactName: 'rng'
+         publishLocation: 'Container'
+      
      - task: AzureFunctionApp@1
        inputs:
           azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
