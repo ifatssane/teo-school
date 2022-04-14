@@ -129,10 +129,8 @@ stages:
                 useLegacyPattern: false
                 enableTelemetry: true
 
-            - task: AzureRmWebAppDeployment@4
+            - task: AzureWebAppContainer@1
               inputs:
-                ConnectionType: 'AzureRM'
                 azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
-                appType: 'webAppContainer'
-                WebAppName: 'app-name-test-worker'
-                DockerRepository: 'jaouadifatssane/worker:$(tags)'
+                appName: 'webui-app-service-for-docker'
+                containers: 'dockercoinsacr.azurecr.io/jaouadifatssane/webui:$(tags)'
