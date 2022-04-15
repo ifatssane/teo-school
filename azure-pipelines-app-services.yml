@@ -45,40 +45,41 @@ stages:
      
 #### RNG #####
 
-     - bash: |
-          pip install flask
-       displayName: 'Install RNG Dependencies'
-       workingDirectory: rng/
+    #  - bash: |
+    #       pip install flask
+    #    displayName: 'Install RNG Dependencies'
+    #    workingDirectory: rng/
 
-     - task: ArchiveFiles@2
-       inputs:
-         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/rng'
-         includeRootFolder: false
-         archiveFile: '$(System.DefaultWorkingDirectory)/rng-build$(Build.BuildId).zip'
-         replaceExistingArchive: true
+    #  - task: ArchiveFiles@2
+    #    inputs:
+    #      rootFolderOrFile: '$(System.DefaultWorkingDirectory)/rng'
+    #      includeRootFolder: false
+    #      archiveFile: '$(System.DefaultWorkingDirectory)/rng-build$(Build.BuildId).zip'
+    #      replaceExistingArchive: true
 
-     - task: PublishBuildArtifacts@1
-       displayName: 'Publish Artifact: drop'
-       inputs:
-         PathtoPublish: '$(System.DefaultWorkingDirectory)/rng-build$(Build.BuildId).zip'
-         ArtifactName: 'drop'
+    #  - task: PublishBuildArtifacts@1
+    #    displayName: 'Publish Artifact: drop'
+    #    inputs:
+    #      PathtoPublish: '$(System.DefaultWorkingDirectory)/rng-build$(Build.BuildId).zip'
+    #      ArtifactName: 'drop'
       
-     - task: AzureFunctionApp@1
-       inputs:
-          azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
-          appType: 'functionApp'
-          appName: 'rng-function-app'
-          package: '$(System.DefaultWorkingDirectory)/rng-build$(Build.BuildId).zip'
-          deploymentMethod: 'auto'
+    #  - task: AzureFunctionApp@1
+    #    inputs:
+    #       azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+    #       appType: 'functionApp'
+    #       appName: 'rng-function-app'
+    #       package: '$(System.DefaultWorkingDirectory)/rng-build$(Build.BuildId).zip'
+    #       deploymentMethod: 'auto'
+
 
 ##### Fin RNG ####
 
      - task: Docker@2
-       displayName: Build Hacher
+       displayName: Build Hasher
        condition: succeeded()
        inputs:
          containerRegistry: 'dockercoinsacr'
-         repository: jaouadifatssane/hacher
+         repository: jaouadifatssane/hasher
          command: buildAndPush
          Dockerfile: hasher/Dockerfile
          tags: $(tags)
@@ -99,6 +100,16 @@ stages:
          repository: jaouadifatssane/webui
          command: buildAndPush
          Dockerfile: webui/Dockerfile
+         tags: $(tags)
+
+     - task: Docker@2
+       displayName: Build RNG
+       condition: succeeded()
+       inputs:
+         containerRegistry: 'dockercoinsacr'
+         repository: jaouadifatssane/rng
+         command: buildAndPush
+         Dockerfile: rng/Dockerfile
          tags: $(tags)
 
  - stage: DeployDev
@@ -134,3 +145,9 @@ stages:
                 azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
                 appName: 'webui-app-service-for-docker'
                 containers: 'dockercoinsacr.azurecr.io/jaouadifatssane/webui:$(tags)'
+            
+            - task: AzureFunctionAppContainer@1
+              inputs:
+                azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+                appName: 'hasher-function-app'
+                imageName: 'dockercoinsacr.azurecr.io/jaouadifatssane/hasher:$(tags)'
