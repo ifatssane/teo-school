@@ -52,17 +52,16 @@ stages:
 
      - task: ArchiveFiles@2
        inputs:
-         rootFolderOrFile: 'rng/'
-         includeRootFolder: true
-         archiveType: 'zip'
-         archiveFile: '$(System.DefaultWorkingDirectory)/rng-$(tags).zip'
+         rootFolderOrFile: '$(System.DefaultWorkingDirectory)/rng'
+         includeRootFolder: false
+         archiveFile: '$(System.DefaultWorkingDirectory)/rng-build$(Build.BuildId).zip'
          replaceExistingArchive: true
 
      - task: PublishBuildArtifacts@1
        displayName: 'Publish Artifact: drop'
        inputs:
-         PathtoPublish: '$(System.DefaultWorkingDirectory)/rng-$(tags).zip'
-         ArtifactName: 'rng'
+         PathtoPublish: '$(System.DefaultWorkingDirectory)/rng-build$(Build.BuildId).zip'
+         ArtifactName: 'drop'
       
      - task: AzureFunctionApp@1
        inputs:
@@ -71,6 +70,7 @@ stages:
           appName: 'rng-function-app'
           package: '$(System.ArtifactsDirectory)/**/*.zip'
           deploymentMethod: 'auto'
+
 ##### Fin RNG ####
 
      - task: Docker@2
