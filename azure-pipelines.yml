@@ -19,17 +19,6 @@ stages:
      steps:
      - checkout: self
        clean: true
-     - task: SonarCloudPrepare@1
-       inputs:
-         SonarCloud: 'SonarCloud'
-         organization: 'jaouadifatssane'
-         scannerMode: 'CLI'
-         configMode: 'manual'
-         cliProjectKey: 'Jaouadifatssane_TeoSchool-Jaouad'
-         cliProjectName: 'TeoSchool-Jaouad'
-         cliSources: '.'
-
-     - task: SonarCloudAnalyze@1
 
     ##RNG Tests begin##  
      - task: UsePythonVersion@0
@@ -42,7 +31,19 @@ stages:
            python -m pytest rng/
        displayName: 'RNG Tests'
        condition: succeeded()
-     ###Tests end####
+    ###Tests end####
+
+     - task: SonarCloudPrepare@1
+       inputs:
+         SonarCloud: 'SonarCloud'
+         organization: 'jaouadifatssane'
+         scannerMode: 'CLI'
+         configMode: 'manual'
+         cliProjectKey: 'Jaouadifatssane_TeoSchool-Jaouad'
+         cliProjectName: 'TeoSchool-Jaouad'
+         cliSources: '.'
+
+     - task: SonarCloudAnalyze@1
      
      - task: Docker@2
        displayName: Build RNG
@@ -53,7 +54,6 @@ stages:
          command: buildAndPush
          Dockerfile: rng/Dockerfile
          tags: $(tags)
-
      - task: Docker@2
        displayName: Build Hacher
        condition: succeeded()
@@ -136,6 +136,7 @@ stages:
                 kubernetesServiceEndpoint: 'aks-connection-service'
                 command: 'apply'
                 arguments: '-f scripts/K8S/dev-config-map.yml'
+                
             - task: Kubernetes@1
               displayName: 'Deployment to the cluster'
               inputs:
