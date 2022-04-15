@@ -128,6 +128,14 @@ stages:
                 arguments: '-f scripts/K8S/init-K8S-deployment.yml'
                 secretType: 'dockerRegistry'
                 containerRegistryType: 'Azure Container Registry'
+
+            - task: Kubernetes@1
+              displayName: 'Create environment variables'
+              inputs:
+                connectionType: 'Kubernetes Service Connection'
+                kubernetesServiceEndpoint: 'aks-connection-service'
+                command: 'apply'
+                arguments: '-f scripts/K8S/dev-config-map.yml'
             - task: Kubernetes@1
               displayName: 'Deployment to the cluster'
               inputs:
