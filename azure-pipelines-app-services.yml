@@ -31,16 +31,16 @@ stages:
     #  - task: SonarCloudAnalyze@1
 
     ##RNG Tests begin##  
-     - task: UsePythonVersion@0
-       displayName: 'Use Python $(pythonVersion)'
-       inputs:
-           versionSpec: '$(pythonVersion)'
-       condition: succeededOrFailed()
-     - script: |
-           pip install flask pytest pytest-azurepipelines
-           python -m pytest rng/
-       displayName: 'RNG Tests'
-       condition: succeeded()
+    #  - task: UsePythonVersion@0
+    #    displayName: 'Use Python $(pythonVersion)'
+    #    inputs:
+    #        versionSpec: '$(pythonVersion)'
+    #    condition: succeededOrFailed()
+    #  - script: |
+    #        pip install flask pytest pytest-azurepipelines
+    #        python -m pytest rng/
+    #    displayName: 'RNG Tests'
+    #    condition: succeeded()
      ###Tests end####
      
 #### RNG #####
@@ -83,15 +83,15 @@ stages:
          command: buildAndPush
          Dockerfile: hasher/Dockerfile
          tags: $(tags)
-     - task: Docker@2
-       displayName: Build Worker
-       condition: succeeded()
-       inputs:
-         containerRegistry: 'dockercoinsacr'
-         repository: jaouadifatssane/worker
-         command: buildAndPush
-         Dockerfile: worker/Dockerfile
-         tags: $(tags)
+    #  - task: Docker@2
+    #    displayName: Build Worker
+    #    condition: succeeded()
+    #    inputs:
+    #      containerRegistry: 'dockercoinsacr'
+    #      repository: jaouadifatssane/worker
+    #      command: buildAndPush
+    #      Dockerfile: worker/Dockerfile
+    #      tags: $(tags)
      - task: Docker@2
        displayName: Build Webui
        condition: succeeded()
@@ -102,15 +102,15 @@ stages:
          Dockerfile: webui/Dockerfile
          tags: $(tags)
 
-     - task: Docker@2
-       displayName: Build RNG
-       condition: succeeded()
-       inputs:
-         containerRegistry: 'dockercoinsacr'
-         repository: jaouadifatssane/rng
-         command: buildAndPush
-         Dockerfile: rng/Dockerfile
-         tags: $(tags)
+    #  - task: Docker@2
+    #    displayName: Build RNG
+    #    condition: succeeded()
+    #    inputs:
+    #      containerRegistry: 'dockercoinsacr'
+    #      repository: jaouadifatssane/rng
+    #      command: buildAndPush
+    #      Dockerfile: rng/Dockerfile
+    #      tags: $(tags)
 
  - stage: DeployDev
    displayName: 'Deploy to Dev env'
