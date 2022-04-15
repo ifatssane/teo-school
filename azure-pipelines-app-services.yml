@@ -68,7 +68,7 @@ stages:
           azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
           appType: 'functionApp'
           appName: 'rng-function-app'
-          package: '$(System.ArtifactsDirectory)/**/*.zip'
+          package: '$(System.DefaultWorkingDirectory)/rng-build$(Build.BuildId).zip'
           deploymentMethod: 'auto'
 
 ##### Fin RNG ####
