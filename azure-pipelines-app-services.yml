@@ -83,15 +83,16 @@ stages:
          command: buildAndPush
          Dockerfile: hasher/Dockerfile
          tags: $(tags)
-    #  - task: Docker@2
-    #    displayName: Build Worker
-    #    condition: succeeded()
-    #    inputs:
-    #      containerRegistry: 'dockercoinsacr'
-    #      repository: jaouadifatssane/worker
-    #      command: buildAndPush
-    #      Dockerfile: worker/Dockerfile
-    #      tags: $(tags)
+
+     - task: Docker@2
+       displayName: Build Worker
+       condition: succeeded()
+       inputs:
+          containerRegistry: 'dockercoinsacr'
+          repository: jaouadifatssane/worker
+          command: buildAndPush
+          Dockerfile: worker/Dockerfile
+          tags: $(tags)
      - task: Docker@2
        displayName: Build Webui
        condition: succeeded()
@@ -102,15 +103,15 @@ stages:
          Dockerfile: webui/Dockerfile
          tags: $(tags)
 
-    #  - task: Docker@2
-    #    displayName: Build RNG
-    #    condition: succeeded()
-    #    inputs:
-    #      containerRegistry: 'dockercoinsacr'
-    #      repository: jaouadifatssane/rng
-    #      command: buildAndPush
-    #      Dockerfile: rng/Dockerfile
-    #      tags: $(tags)
+     - task: Docker@2
+       displayName: Build RNG
+       condition: succeeded()
+       inputs:
+          containerRegistry: 'dockercoinsacr'
+          repository: jaouadifatssane/rng
+          command: buildAndPush
+          Dockerfile: rng/Dockerfile
+          tags: $(tags)
 
  - stage: DeployDev
    displayName: 'Deploy to Dev env'
@@ -141,13 +142,68 @@ stages:
                 enableTelemetry: true
 
             - task: AzureWebAppContainer@1
+              displayName: Deploy RNG
               inputs:
                 azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
-                appName: 'webui-app-service-for-docker'
-                containers: 'dockercoinsacr.azurecr.io/jaouadifatssane/webui:$(tags)'
+                appName: 'rng-app-service'
+                containers: 'dockercoinsacr.azurecr.io/jaouadifatssane/rng:$(tags)'
             
             - task: AzureFunctionAppContainer@1
+              displayName: Deploy Hasher container function
               inputs:
                 azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
                 appName: 'hasher-function-app'
                 imageName: 'dockercoinsacr.azurecr.io/jaouadifatssane/hasher:$(tags)'
+            
+            - task: AzureWebAppContainer@1
+              displayName: Deploy Webui
+              inputs:
+                azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+                appName: 'webui-app-service'
+                containers: 'dockercoinsacr.azurecr.io/jaouadifatssane/webui:$(tags)'
+
+            - task: AzureWebAppContainer@1
+              displayName: Deploy Worker
+              inputs:
+                azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+                appName: 'worker-app-service'
+                containers: 'dockercoinsacr.azurecr.io/jaouadifatssane/worker:$(tags)'
+
+            ## Settings ####
+            - task: AzureAppServiceSettings@1
+              inputs:
+                azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+                appName: 'webui-app-service'
+                resourceGroupName: 'jaouad-aks-dockercoins'
+                appSettings: |
+                  [
+                      {
+                        "name": "REDIS_ENDPOINT",
+                        "value": "redis-dockercoins.redis.cache.windows.net",
+                        "slotSetting": false
+                      }
+                  ]
+            
+            - task: AzureAppServiceSettings@1
+              inputs:
+                azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+                appName: 'worker-app-service'
+                resourceGroupName: 'jaouad-aks-dockercoins'
+                appSettings: |
+                  [
+                      {
+                        "name": "REDIS_ENDPOINT",
+                        "value": "redis-dockercoins.redis.cache.windows.net",
+                        "slotSetting": false
+                      },
+                      {
+                        "name": "RNG_ENDPOINT",
+                        "value": "https://rng-app-service.azurewebsites.net",
+                        "slotSetting": false
+                      },
+                      {
+                        "name": "HASHER_ENDPOINT",
+                        "value": "https://hasher-function-app.azurewebsites.net",
+                        "slotSetting": false
+                      }
+                    ]
