@@ -20,14 +20,14 @@ steps:
     backendAzureRmStorageAccountName: 'jaouadterraformstorage'
     backendAzureRmContainerName: 'jaouad-terraform-container-app-services'
     backendAzureRmKey: 'terraform.tfstate'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure/appServices'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure'
 - task: TerraformTaskV2@2
   displayName: 'Plan Terraform'
   inputs:
     provider: 'azurerm'
     command: 'plan'
     environmentServiceNameAzureRM: 'Azure-teolia-service-connection'    
-    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure/appServices'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure'
 
 - task: TerraformTaskV2@2
   displayName: 'Apply Terraform'
