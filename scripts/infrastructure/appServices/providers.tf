@@ -8,6 +8,9 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "3.0.2"
     }
+    local = {
+      source = "hashicorp/local"
+    }
     # azuredevops = {
     #   source = "microsoft/azuredevops"
     #   version = ">=0.1.0"
