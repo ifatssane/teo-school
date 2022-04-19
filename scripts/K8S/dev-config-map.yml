@@ -1,0 +1,10 @@
+# Use config map for not-secret configuration data
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: dev-configmap
+data:
+  REDIS_ENDPOINT: redis
+  RNG_ENDPOINT: http://rng
+  HASHER_ENDPOINT: http://hasher
