@@ -1,0 +1,17 @@
+[
+    {
+      "name": "REDIS_ENDPOINT",
+      "value": "redis-dockercoins.redis.cache.windows.net",
+      "slotSetting": false
+    },
+    {
+      "name": "RNG_ENDPOINT",
+      "value": "https://rng-app-service.azurewebsites.net",
+      "slotSetting": false
+    },
+    {
+      "name": "HASHER_ENDPOINT",
+      "value": "https://hasher-function-app.azurewebsites.net",
+      "slotSetting": false
+    }
+  ]

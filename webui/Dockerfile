@@ -3,10 +3,9 @@ LABEL maintainer="jaouad.ifatssane@gmail.com"
 
 WORKDIR /usr/app
 
-ADD . .
+RUN npm install redis@3.0.2 express
 
-RUN npm install express 
-RUN npm install redis
+COPY . .
 
 EXPOSE 80
 CMD ["node", "webui.js"]
