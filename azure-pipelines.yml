@@ -20,7 +20,7 @@ stages:
      - checkout: self
        clean: true
 
-    ##RNG Tests begin##  
+    ##Tests begin##  
      - task: UsePythonVersion@0
        displayName: 'Use Python $(pythonVersion)'
        inputs:
