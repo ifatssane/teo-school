@@ -23,21 +23,6 @@ variable "acr_name" {
   description = "ACR name"
 }
 
-variable "docker_registry_server_url" {
-  type        = string
-  description = "Docker registry server URL"
-}
-
-variable "docker_registry_server_username" {
-  type        = string
-  description = "Docker registry server username"
-}
-
-variable "docker_registry_server_password" {
-  type        = string
-  description = "Docker registry server password"
-}
-
 variable "storage_account_name" {
   type        = string
   description = "Storage account name"

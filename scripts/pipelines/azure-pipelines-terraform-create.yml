@@ -37,6 +37,7 @@ steps:
     backendAzureRmContainerName: 'jaouad-terraform-container-app-services'
     backendAzureRmKey: 'terraform.tfstate'
     workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure'
+    
 - task: TerraformTaskV2@2
   displayName: 'Plan Terraform'
   inputs:
