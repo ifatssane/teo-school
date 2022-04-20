@@ -10,6 +10,22 @@ steps:
   displayName: 'Install Terraform'
   inputs:
     terraformVersion: 'latest'
+
+- task: replacetokens@5
+  displayName: Replace tokens
+  inputs:
+    targetFiles: '**/*'
+    encoding: 'auto'
+    tokenPattern: 'default'
+    writeBOM: true
+    actionOnMissing: 'warn'
+    keepToken: false
+    actionOnNoFiles: 'warn'
+    enableTransforms: false
+    enableRecursion: false
+    useLegacyPattern: false
+    enableTelemetry: true
+
 - task: TerraformTaskV2@2
   displayName: 'initialize Terraform'
   inputs:
