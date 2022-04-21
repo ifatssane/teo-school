@@ -2,8 +2,8 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: hacher
-  name: hacher-svc
+    app: hasher
+  name: hasher-svc
   namespace: dockercoins
 spec:
   ports:
@@ -11,5 +11,5 @@ spec:
     protocol: TCP
     targetPort: 80
   selector:
-    app: hacher-app
+    app: hasher-app
   type: ClusterIP

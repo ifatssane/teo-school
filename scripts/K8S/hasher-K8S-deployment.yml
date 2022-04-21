@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: hacher-deployment
+  name: hasher-deployment
   namespace: dockercoins
   labels:
-    app: hacher-app
+    app: hasher-app
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: hacher-app
+      app: hasher-app
   template:
     metadata:
       labels:
-        app: hacher-app
+        app: hasher-app
     spec:
       containers:
-      - name: hacher
-        image: dockercoinsacr.azurecr.io/jaouadifatssane/hacher:#{tags}#
+      - name: hasher
+        image: dockercoinsacr.azurecr.io/jaouadifatssane/hasher:#{tags}#
         imagePullPolicy: Always
         ports:
         - containerPort: 80 
