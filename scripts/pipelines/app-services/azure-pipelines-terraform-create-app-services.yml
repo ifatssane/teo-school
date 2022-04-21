@@ -1,0 +1,48 @@
+trigger:
+- none
+
+pool:
+  vmImage: windows-latest
+
+steps:
+
+- task: TerraformInstaller@0
+  displayName: 'Install Terraform'
+  inputs:
+    terraformVersion: 'latest'
+
+- task: replacetokens@5
+  displayName: Replace tokens
+  inputs:
+    targetFiles: '**/*'
+    encoding: 'auto'
+    tokenPattern: 'default'
+    writeBOM: true
+    actionOnMissing: 'warn'
+    keepToken: false
+    actionOnNoFiles: 'warn'
+    enableTransforms: false
+    enableRecursion: false
+    useLegacyPattern: false
+    enableTelemetry: true
+
+- task: TerraformTaskV2@2
+  displayName: 'initialize Terraform'
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: 'Azure-teolia-service-connection'
+    backendAzureRmResourceGroupName: 'jaouad-aks-dockercoins'
+    backendAzureRmStorageAccountName: 'jaouadterraformstorage'
+    backendAzureRmContainerName: 'jaouad-terraform-container-app-services'
+    backendAzureRmKey: 'terraform.tfstate'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure/app-services'
+    
+- task: TerraformTaskV2@2
+  displayName: 'Apply Terraform'
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    commandOptions: '-auto-approve'
+    environmentServiceNameAzureRM: 'Azure-teolia-service-connection'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure/app-services'

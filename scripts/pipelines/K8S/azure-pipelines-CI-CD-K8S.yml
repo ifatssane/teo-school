@@ -1,12 +1,14 @@
 trigger:
-  paths:
-    exclude:
-    - scripts/infrastructure
-    - scripts/pipelines
+- none
+
+pool:
+  vmImage: windows-latest
+
 variables:
   tags: 1.$(Build.Buildid)
   pythonVersion: 3.8
   ingressScriptURL: 'https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.2/deploy/static/provider/cloud/deploy.yaml'
+
 stages:
  - stage: CI
    displayName: 'Continuous Integration'
@@ -129,7 +131,7 @@ stages:
                 connectionType: 'Kubernetes Service Connection'
                 kubernetesServiceEndpoint: 'aks-connection-service'
                 command: 'apply'
-                arguments: '-f scripts/K8S/init-K8S-deployment.yml'
+                arguments: '-f scripts/inrfastructure/K8S/deployments/init-K8S-deployment.yml'
                 secretType: 'dockerRegistry'
                 containerRegistryType: 'Azure Container Registry'
 
@@ -139,7 +141,7 @@ stages:
                 connectionType: 'Kubernetes Service Connection'
                 kubernetesServiceEndpoint: 'aks-connection-service'
                 command: 'apply'
-                arguments: '-f scripts/K8S/'
+                arguments: '-f scripts/inrfastructure/K8S/deployments/'
                 secretType: 'dockerRegistry'
                 containerRegistryType: 'Azure Container Registry'
 

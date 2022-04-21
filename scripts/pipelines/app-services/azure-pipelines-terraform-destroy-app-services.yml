@@ -18,11 +18,11 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure/app-services'
     backendServiceArm: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
     backendAzureRmResourceGroupName: 'jaouad-aks-dockercoins'
     backendAzureRmStorageAccountName: 'jaouadterraformstorage'
-    backendAzureRmContainerName: 'jaouad-terraform-container'
+    backendAzureRmContainerName: 'jaouad-terraform-container-app-services'
     backendAzureRmKey: 'terraform.tfstate'
 
 - task: TerraformTaskV2@2
@@ -30,6 +30,6 @@ steps:
     provider: 'azurerm'
     command: 'destroy'
     commandOptions: '-auto-approve'
-    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure/app-services'
     environmentServiceNameAzureRM: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
   

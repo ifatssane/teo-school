@@ -1,5 +1,5 @@
 trigger:
-- main
+- none
 
 pool:
   vmImage: windows-latest
@@ -7,7 +7,7 @@ pool:
 steps:
 - task: Terraform@2
   inputs:
-    TemplatePath: 'scripts/infrastructure'
+    TemplatePath: 'scripts/infrastructure/K8S'
     Arguments: 'init'
     InstallTerraform: true
     UseAzureSub: true
@@ -17,7 +17,7 @@ steps:
 
 - task: Terraform@2
   inputs:
-    TemplatePath: 'scripts/infrastructure'
+    TemplatePath: 'scripts/infrastructure/K8S'
     Arguments: 'destroy -target azurerm_container_registry.dockercoins-acr target azurerm_kubernetes_cluster.dockercoins-cluster -auto-approve'
     InstallTerraform: true
     UseAzureSub: true

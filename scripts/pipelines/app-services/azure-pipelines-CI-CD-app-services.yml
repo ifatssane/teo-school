@@ -1,11 +1,13 @@
 trigger:
   paths:
     exclude:
-    - scripts/infrastructure
-    - scripts/pipelines
+    - scripts/infrastructure/K8S
+
 variables:
   tags: 1.$(Build.Buildid)
+  azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
   pythonVersion: 3.8
+
 stages:
  - stage: CI
    displayName: 'Continuous Integration'
@@ -18,30 +20,31 @@ stages:
      steps:
      - checkout: self
        clean: true
-    #  - task: SonarCloudPrepare@1
-    #    inputs:
-    #      SonarCloud: 'SonarCloud'
-    #      organization: 'jaouadifatssane'
-    #      scannerMode: 'CLI'
-    #      configMode: 'manual'
-    #      cliProjectKey: 'Jaouadifatssane_TeoSchool-Jaouad'
-    #      cliProjectName: 'TeoSchool-Jaouad'
-    #      cliSources: '.'
 
-    #  - task: SonarCloudAnalyze@1
+     - task: SonarCloudPrepare@1
+       inputs:
+         SonarCloud: 'SonarCloud'
+         organization: 'jaouadifatssane'
+         scannerMode: 'CLI'
+         configMode: 'manual'
+         cliProjectKey: 'Jaouadifatssane_TeoSchool-Jaouad'
+         cliProjectName: 'TeoSchool-Jaouad'
+         cliSources: '.'
 
-    ##RNG Tests begin##  
-    #  - task: UsePythonVersion@0
-    #    displayName: 'Use Python $(pythonVersion)'
-    #    inputs:
-    #        versionSpec: '$(pythonVersion)'
-    #    condition: succeededOrFailed()
-    #  - script: |
-    #        pip install flask pytest pytest-azurepipelines
-    #        python -m pytest rng/
-    #    displayName: 'RNG Tests'
-    #    condition: succeeded()
-     ###Tests end####
+     - task: SonarCloudAnalyze@1
+
+    #RNG Tests begin##  
+     - task: UsePythonVersion@0
+       displayName: 'Use Python $(pythonVersion)'
+       inputs:
+           versionSpec: '$(pythonVersion)'
+       condition: succeededOrFailed()
+     - script: |
+           pip install flask pytest pytest-azurepipelines
+           python -m pytest rng/
+       displayName: 'RNG Tests'
+       condition: succeeded()
+     ##Tests end####
      
 #### RNG #####
 
@@ -65,12 +68,11 @@ stages:
       
     #  - task: AzureFunctionApp@1
     #    inputs:
-    #       azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+    #       azureSubscription: $(azureSubscription)
     #       appType: 'functionApp'
     #       appName: 'rng-function-app'
     #       package: '$(System.DefaultWorkingDirectory)/rng-build$(Build.BuildId).zip'
     #       deploymentMethod: 'auto'
-
 
 ##### Fin RNG ####
 
@@ -144,14 +146,14 @@ stages:
             - task: AzureWebAppContainer@1
               displayName: Deploy RNG
               inputs:
-                azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+                azureSubscription: $(azureSubscription)
                 appName: 'rng-app-service'
                 containers: 'dockercoinsacr.azurecr.io/jaouadifatssane/rng:$(tags)'
             
             - task: AzureFunctionAppContainer@1
               displayName: Deploy Hasher container function
               inputs:
-                azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+                azureSubscription: $(azureSubscription)
                 appName: 'hasher-function-app'
                 imageName: 'dockercoinsacr.azurecr.io/jaouadifatssane/hasher:$(tags)'
             
@@ -165,14 +167,14 @@ stages:
             - task: AzureWebAppContainer@1
               displayName: Deploy Worker
               inputs:
-                azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+                azureSubscription: $(azureSubscription)
                 appName: 'worker-app-service'
                 containers: 'dockercoinsacr.azurecr.io/jaouadifatssane/worker:$(tags)'
 
             ## Settings ####
             - task: AzureAppServiceSettings@1
               inputs:
-                azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+                azureSubscription: $(azureSubscription)
                 appName: 'webui-app-service'
                 resourceGroupName: 'jaouad-aks-dockercoins'
                 appSettings: |
@@ -186,7 +188,7 @@ stages:
             
             - task: AzureAppServiceSettings@1
               inputs:
-                azureSubscription: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
+                azureSubscription: $(azureSubscription)
                 appName: 'worker-app-service'
                 resourceGroupName: 'jaouad-aks-dockercoins'
                 appSettings: |
