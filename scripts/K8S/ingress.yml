@@ -16,4 +16,3 @@ spec:
             name: webui-svc
             port: 
               number: 80
-

@@ -2,14 +2,14 @@ apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app: redis
-  name: redis-svc
+    app: worker
+  name: worker-svc
   namespace: dockercoins
 spec:
   ports:
-  - port: 6379
+  - port: 80
     protocol: TCP
-    targetPort: 6379
+    targetPort: 80
   selector:
-    app: redis-app
+    app: worker-app
   type: ClusterIP

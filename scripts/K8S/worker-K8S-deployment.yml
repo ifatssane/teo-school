@@ -21,3 +21,10 @@ spec:
         imagePullPolicy: Always
         ports:
         - containerPort: 80
+        env:
+          - name: REDIS_ENDPOINT
+            value: "redis-svc"
+          - name: RNG_ENDPOINT
+            value: "http://rng-svc"
+          - name: HASHER_ENDPOINT
+            value: "http://hasher-svc"

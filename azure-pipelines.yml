@@ -54,6 +54,7 @@ stages:
          command: buildAndPush
          Dockerfile: rng/Dockerfile
          tags: $(tags)
+
      - task: Docker@2
        displayName: Build Hasher
        condition: succeeded()
@@ -63,6 +64,7 @@ stages:
          command: buildAndPush
          Dockerfile: hasher/Dockerfile
          tags: $(tags)
+
      - task: Docker@2
        displayName: Build Worker
        condition: succeeded()
@@ -72,6 +74,7 @@ stages:
          command: buildAndPush
          Dockerfile: worker/Dockerfile
          tags: $(tags)
+
      - task: Docker@2
        displayName: Build Webui
        condition: succeeded()
@@ -95,6 +98,7 @@ stages:
         deploy:
           steps:
             - checkout: self 
+            
             - task: replacetokens@5
               displayName: Replace tokens
               inputs:
@@ -130,14 +134,6 @@ stages:
                 containerRegistryType: 'Azure Container Registry'
 
             - task: Kubernetes@1
-              displayName: 'Create environment variables'
-              inputs:
-                connectionType: 'Kubernetes Service Connection'
-                kubernetesServiceEndpoint: 'aks-connection-service'
-                command: 'apply'
-                arguments: '-f scripts/K8S/dev-config-map.yml'
-                
-            - task: Kubernetes@1
               displayName: 'Deployment to the cluster'
               inputs:
                 connectionType: 'Kubernetes Service Connection'
@@ -146,6 +142,7 @@ stages:
                 arguments: '-f scripts/K8S/'
                 secretType: 'dockerRegistry'
                 containerRegistryType: 'Azure Container Registry'
+
             - task: Kubernetes@1
               displayName: 'Deploy Ingress controller'
               inputs:
