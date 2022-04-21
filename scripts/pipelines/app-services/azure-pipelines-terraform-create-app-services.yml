@@ -27,6 +27,7 @@ steps:
     enableTelemetry: true
 
 - task: replacetokens@5
+  displayName: 'Replace tokens'
   inputs:
       targetFiles: '**/*.tfvars'
       encoding: 'auto'
