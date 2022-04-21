@@ -26,6 +26,21 @@ steps:
     useLegacyPattern: false
     enableTelemetry: true
 
+- task: replacetokens@5
+  displayName: 'Replace tokens'
+  inputs:
+      targetFiles: '**/*.tfvars'
+      encoding: 'auto'
+      tokenPattern: 'default'
+      writeBOM: true
+      actionOnMissing: 'warn'
+      keepToken: false
+      actionOnNoFiles: 'continue'
+      enableTransforms: false
+      enableRecursion: false
+      useLegacyPattern: false
+      enableTelemetry: true
+      
 - task: TerraformTaskV2@2
   displayName: 'initialize Terraform'
   inputs:
