@@ -1,7 +1,0 @@
-[
-    {
-      "name": "REDIS_ENDPOINT",
-      "value": "redis-dockercoins.redis.cache.windows.net",
-      "slotSetting": false
-    }
-]

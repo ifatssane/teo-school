@@ -1,28 +1,12 @@
 #In Azure, all infrastructure elements such as virtual machines, storage, and our Kubernetes cluster need to be attached to a resource group.
 
-resource "azurerm_role_assignment" "role_acrpull" {
-  scope                            = azurerm_container_registry.acr.id
-  role_definition_name             = "AcrPull"
-  principal_id                     = azurerm_kubernetes_cluster.aks.kubelet_identity.0.object_id
-  skip_service_principal_aad_check = true
-}
-
 resource "azurerm_container_registry" "acr" {
   name                = var.acr_name
   resource_group_name = var.resource_group_name
   location            = var.location
   sku                 = "Basic"
-  admin_enabled       = false
+  admin_enabled       = true
 }
-
-# resource "azuredevops_serviceendpoint_azurecr" "azurecr" {
-#   project_id             = "TeoSchool-Jaouad"
-#   service_endpoint_name  = "Sample AzureCR"
-#   resource_group            = var.resource_group_name
-#   azurecr_name              = var.acr_name
-#   azurecr_subscription_name = "teolia-school-01"
-#   azurecr_subscription_id = "319819ff-ed9b-4c33-a3d3-d7833a1a5a54"
-# }
 
 resource "azurerm_kubernetes_cluster" "aks" {
   name                = var.cluster_name
