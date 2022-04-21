@@ -55,11 +55,11 @@ stages:
          Dockerfile: rng/Dockerfile
          tags: $(tags)
      - task: Docker@2
-       displayName: Build Hacher
+       displayName: Build Hasher
        condition: succeeded()
        inputs:
          containerRegistry: 'dockercoinsacr'
-         repository: jaouadifatssane/hacher
+         repository: jaouadifatssane/hasher
          command: buildAndPush
          Dockerfile: hasher/Dockerfile
          tags: $(tags)
