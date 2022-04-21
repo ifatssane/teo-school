@@ -21,8 +21,8 @@ steps:
     workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure/app-services'
     backendServiceArm: 'teolia-school-01 (319819ff-ed9b-4c33-a3d3-d7833a1a5a54)'
     backendAzureRmResourceGroupName: 'jaouad-aks-dockercoins'
-    backendAzureRmStorageAccountName: 'jaouadterraformstorage'
-    backendAzureRmContainerName: 'jaouad-terraform-container-app-services'
+    backendAzureRmStorageAccountName: 'dockercoinsstorage'
+    backendAzureRmContainerName: 'terraform-app-services'
     backendAzureRmKey: 'terraform.tfstate'
 
 - task: TerraformTaskV2@2

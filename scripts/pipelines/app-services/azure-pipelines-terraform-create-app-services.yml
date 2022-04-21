@@ -33,8 +33,8 @@ steps:
     command: 'init'
     backendServiceArm: 'Azure-teolia-service-connection'
     backendAzureRmResourceGroupName: 'jaouad-aks-dockercoins'
-    backendAzureRmStorageAccountName: 'jaouadterraformstorage'
-    backendAzureRmContainerName: 'jaouad-terraform-container-app-services'
+    backendAzureRmStorageAccountName: 'dockercoinsstorage'
+    backendAzureRmContainerName: 'terraform-app-services'
     backendAzureRmKey: 'terraform.tfstate'
     workingDirectory: '$(System.DefaultWorkingDirectory)/scripts/infrastructure/app-services'
     
