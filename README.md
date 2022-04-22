@@ -29,7 +29,7 @@ rng = App service
 hasher = Azure Function
 worker = App service
 webui = App service
-
+redis = Azure Cache for Redis
 ```
 Pipelines
 ```
