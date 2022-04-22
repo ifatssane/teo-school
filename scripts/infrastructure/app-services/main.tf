@@ -73,11 +73,11 @@ resource "azurerm_app_service" "webui-app-service" {
   identity {
     type = "SystemAssigned"
   }
-
   app_settings = {
     DOCKER_REGISTRY_SERVER_URL      = azurerm_container_registry.acr.login_server
     DOCKER_REGISTRY_SERVER_USERNAME = azurerm_container_registry.acr.admin_username
     DOCKER_REGISTRY_SERVER_PASSWORD = azurerm_container_registry.acr.admin_password
+    REDIS_PASSWORD = azurerm_redis_cache.redis.primary_access_key
   }
 
   connection_string {
