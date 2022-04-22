@@ -33,7 +33,7 @@ redis = Azure Cache for Redis
 ```
 Pipelines
 ```
-![image](https://user-images.githubusercontent.com/57577628/164688316-fcdd655c-0587-4a32-814a-2a7c62981b27.png)
+![image](https://user-images.githubusercontent.com/57577628/164734186-d1bf2de0-4ae3-47e0-bb02-68329b989ad1.png)
 
 
 ```
