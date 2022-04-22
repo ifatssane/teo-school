@@ -14,7 +14,7 @@ else:
     logging.getLogger("requests").setLevel(logging.WARNING)
 
 
-redis = Redis(host=os.environ.get('REDIS_ENDPOINT'), port=6379)
+redis = Redis(host=os.environ.get('REDIS_ENDPOINT'), port=6379,password=os.environ.get('REDIS_PASSWORD'))
 
 
 def get_random_bytes():
