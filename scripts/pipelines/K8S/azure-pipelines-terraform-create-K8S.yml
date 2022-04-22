@@ -21,6 +21,11 @@ steps:
     useLegacyPattern: false
     enableTelemetry: true
 
+- task: TerraformInstaller@0
+  displayName: 'Install Terraform'
+  inputs:
+    terraformVersion: 'latest'
+    
 - task: TerraformTaskV2@2
   displayName: 'initialize Terraform'
   inputs:
