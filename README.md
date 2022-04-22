@@ -24,8 +24,11 @@ There are 2 type of infrastructure:
 k8s: this one is working correctly, the k8s is based on Azure as AKS and there is an ACR as Docker images repositories.
 For monitoring, i used Prometheus, Grafana and Thanos, they are configured, for example Prometheus already configured to scrape metrics from my nodes and more, there are also an existing dashboards on Grafana, Thanos is configured also to store data on an existing azure account storage.
 
-App services: this one is uncomplete, i created this it juste to do a POC and practice my knowldege by deploying microservice app as app services, it lack of a prive network for the backend services to work correctly.
-
+App services: this one is uncomplete, i created this it juste to do a POC and practice my knowldege by deploying microservice app as app services and Azure Functions, it lacks of a private network for the backend services to work correctly.
+rng = App service
+hasher = Azure Function
+worker = App service
+webui = App service
 
 ```
 Pipelines
