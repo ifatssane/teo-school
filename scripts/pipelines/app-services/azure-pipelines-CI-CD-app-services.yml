@@ -18,19 +18,7 @@ stages:
      steps:
      - checkout: self
        clean: true
-
-     - task: SonarCloudPrepare@1
-       inputs:
-         SonarCloud: 'SonarCloud'
-         organization: 'jaouadifatssane'
-         scannerMode: 'CLI'
-         configMode: 'manual'
-         cliProjectKey: 'Jaouadifatssane_TeoSchool-Jaouad'
-         cliProjectName: 'TeoSchool-Jaouad'
-         cliSources: '.'
-
-     - task: SonarCloudAnalyze@1
-
+ 
     #RNG Tests begin##  
      - task: UsePythonVersion@0
        displayName: 'Use Python $(pythonVersion)'
@@ -43,6 +31,18 @@ stages:
        displayName: 'RNG Tests'
        condition: succeeded()
      ##Tests end####
+
+     - task: SonarCloudPrepare@1
+       inputs:
+         SonarCloud: 'SonarCloud'
+         organization: 'jaouadifatssane'
+         scannerMode: 'CLI'
+         configMode: 'manual'
+         cliProjectKey: 'Jaouadifatssane_TeoSchool-Jaouad'
+         cliProjectName: 'TeoSchool-Jaouad'
+         cliSources: '.'
+
+     - task: SonarCloudAnalyze@1
      
 #### RNG #####
 
