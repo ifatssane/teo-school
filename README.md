@@ -11,13 +11,13 @@ webui = web interface to watch progress
 ```
 
 ```
-The ultimate resulte on Webui service:
+The ultimate result (Webui service)
 ```
 
 <img width="404" alt="Result" src="https://user-images.githubusercontent.com/57577628/164680453-28d07882-a76f-4692-b8d4-c841e1afa40f.PNG">
 
 ```
-Infrastructure:
+Infrastructure
 ```
 Terraform used to create the infrastracture.
 There are 2 type of infrastructure:
@@ -26,8 +26,15 @@ For monitoring, i used Prometheus, Grafana and Thanos, they are configured, for 
 
 App services: this one is uncomplete, i created this it juste to do a POC and practice my knowldege by deploying microservice app as app services, it lack of a prive network for the backend services to work correctly.
 
+
 ```
-Coninues intégration:
+Pipelines
+```
+![image](https://user-images.githubusercontent.com/57577628/164688316-fcdd655c-0587-4a32-814a-2a7c62981b27.png)
+
+
+```
+Coninues intégration
 ```
 
 Tool used for the CI/CD: Azure DevOps.
@@ -40,4 +47,9 @@ During the continuos integration, i build the docker images and push them to the
 
 SonarCloud is used to do static scan for our microservice app, and you need to create an account to attach it with Azure DevOps
 
-For, the continuos deployment, i deploy the AKS deployment objects, services and ingress controller to acces to my Webui front service from outside the world
+```
+Coninues deployment
+```
+
+I deploy the AKS deployment objects, services and ingress controller to acces to my Webui front service from outside the world
+
