@@ -1,7 +1,5 @@
 trigger:
-  paths:
-    exclude:
-    - scripts/infrastructure/K8S
+- none
 
 variables:
   tags: 1.$(Build.Buildid)
