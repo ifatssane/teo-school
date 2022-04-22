@@ -27,7 +27,9 @@ App services: this one is uncomplete, i created this it juste to do a POC and pr
 Coninues intégration:
 ```
 Tool used for the CI/CD: Azure DevOps.
+
 ![image](https://user-images.githubusercontent.com/57577628/164684698-40d87f06-e700-4ed7-a9c2-f6036154cf7e.png)
+
 During the continuos integration, i build the docker images and push them to the ACR, i also tested RNG code by adding test task, then the tests results are pushed to the Azure DevOps pipeline :
 ![image](https://user-images.githubusercontent.com/57577628/164685758-34251c6d-a1ad-4acd-9253-c7c100a2779f.png)
 
