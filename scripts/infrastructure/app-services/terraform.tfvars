@@ -9,3 +9,4 @@ acr_name            = "dockercoinsacr"
 #docker_registry_server_password       = #{DOCKER_REGISTRY_SERVER_PASSWORD}#
 storage_account_name       = "dockercoinsstorage"
 storage_account_access_key = #{STORAGE_ACCOUNT_ACCESS_KEY}#
+
