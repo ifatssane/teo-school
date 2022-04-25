@@ -4,7 +4,8 @@ var redis = require('redis');
 
 var client = redis.createClient(
     {
-        url: process.env.REDIS_ENDPOINT + ":6379",
+        host: process.env.REDIS_ENDPOINT,
+        port : "6379",
         password: process.env.REDIS_PASSWORD,
     }
     );
